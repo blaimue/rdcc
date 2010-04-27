@@ -1,0 +1,175 @@
+body {
+	color:#3b0f0e;
+	font-family:"Lucida Grande", "Lucida Sans Unicode", sans-serif;
+	background-image:url(/images/bg1.gif);
+	background-repeat;repeat;
+}
+
+a {
+	text-decoration:none;
+}
+
+a:hover {
+	text-decoration:underline;
+}
+
+td {
+	vertical-align:top;
+}
+
+/********************************************
+	Header
+*********************************************/
+
+#header {
+	background:#121212;
+	color:#ab8e6e;
+	font-size:9pt;
+}
+
+#header a {
+	color:#ab8e6e;
+}
+
+#header span {
+	margin-right:15px;
+}
+
+
+/********************************************
+	Sidebar
+*********************************************/
+
+#sidebar {
+	font-size:8pt;
+}
+
+#donateWrapper a:link {text-decoration:none;}
+#donateWrapper a:active {text-decoration:none;}
+#donateWrapper a:visited {text-decoration:none;}
+#donateWrapper a:hover {text-decoration:none;}
+
+#donate a {
+	color:#b12a14;
+	font-size:20pt;
+	font-family:"Times New Roman", serif;
+}
+
+#donateSub a {
+	color:#3b0f0e;
+	font-size:10pt;
+}
+
+#donateExplain a {
+	color:#3b0f0e;
+	font-style:italic;
+	font-size:8pt;
+	margin-top:4px;
+}
+
+/********************************************
+	Main
+*********************************************/
+
+#main h1 {
+	color:#b12a14;
+	font-size:14pt;
+}
+
+#main h2 {
+	font-size:12pt;
+}
+
+#main h2 span {
+	font-size: 10pt;
+}
+
+#main h3 {
+	font-size:10pt;
+	margin-bottom:0pxx;
+	margin-left:16px;
+}
+
+#main .act {
+	color:#b12a14;
+	font-size:10pt;
+	background:#dfdbcf;
+	padding:6px;
+}
+
+.motd {
+	border: solid 1px #ccc;
+}
+.motd ul {
+	padding: 0;
+	margin: 6px;
+}
+.motd li {
+	list-style: none;
+	margin-bottom: 6px;
+}
+
+
+/********************************************
+	Footer
+*********************************************/
+
+#footer {
+	color:#FFFFFF;
+	background:#5a141e;
+}
+
+#footer h1 {
+	color:#d07518;
+	font-size:10pt;
+	margin-bottom:3px;
+	font-family:"Trebuchet MS", Helvetica, sans-serif;
+}
+
+#footer h1 a {
+	color:#d07518;
+	font-size:10pt;
+}
+
+#footer a {
+	color:#FFF;
+	font-size:8pt;
+}
+
+#footer td {
+	padding:8px;
+	padding-left:1px;
+}
+
+#googleEntry {
+	width:178px;
+	background:#CCC;
+}
+
+#googleSubmit {
+	border:0px;
+	background:#5a141e;
+	color:#FFF;
+	cursor:pointer;
+	text-decoration:none;
+}
+
+#googleSubmit:hover {
+	text-decoration:underline;
+}
+
+#copyright {
+	background:#000;
+	font-family:'Times New Roman',serif;
+	font-size:9pt;
+	color:#FFF;
+}
+
+#copyright a {
+	color:#d07518;
+	font-size:9pt;
+}
+
+
+
+

@@ -1,0 +1,19 @@
+
+<p>
+  <b>Comment:</b>
+  <%=h @feedback.comment %>
+</p>
+
+<p>
+  <b>User:</b>
+  <%=h "#{@feedback.user.short_name} (#{@feedback.user.email})" unless @feedback.user.nil? %>
+</p>
+
+<p>
+  <b>Status:</b>
+  <%=h @feedback.status %>
+</p>
+
+
+<%= link_to 'Edit', edit_feedback_path(@feedback) %> |
+<%= link_to 'Back', feedbacks_path %>

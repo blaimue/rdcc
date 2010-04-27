@@ -1,0 +1,52 @@
+<h1>Editing user</h1>
+
+<% form_for(@user) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :email %><br />
+    <%= f.text_field :email %>
+  </p>
+  <p>
+    <%= f.label :first_name %><br />
+    <%= f.text_field :first_name %>
+  </p>
+  <p>
+    <%= f.label :last_name %><br />
+    <%= f.text_field :last_name %>
+  </p>
+  <p>
+    <%= f.label :job_title %><br />
+    <%= f.text_field :job_title %>
+  </p>
+  <p>
+    <%= f.label :status %><br />
+    <%= f.radio_button :status, User.STATUS[:fulltime] %>
+        <%= f.label :status, User.status_names()[User.STATUS[:fulltime]], :value => User.STATUS[:fulltime] %><br />
+    <%= f.radio_button :status, User.STATUS[:parttime] %>
+        <%= f.label :status, User.status_names()[User.STATUS[:parttime]], :value => User.STATUS[:parttime] %><br />
+    <%= f.radio_button :status, User.STATUS[:inactive] %>
+        <%= f.label :status, User.status_names()[User.STATUS[:inactive]], :value => User.STATUS[:inactive] %><br />
+  </p>
+  <p>
+    <%= f.label :roles %><br />
+	<% for role in Role.all %>
+	    <input type="checkbox" id="<%= "user_role_ids_#{role.id}" %>" name="user[role_ids][]" value="<%= role.id%>" <%= @user.roles.include?(role) ? '"checked"' : "" %>>
+            <label for="user_role_ids_<%= role.id%>"><%= role.display %></label><br />
+	<% end %>
+  </p>
+  <p>
+    <%= f.label :emergency_contact_name %><br />
+    <%= f.text_field :emergency_contact_name %>
+  </p>
+  <p>
+    <%= f.label :emergency_contact_phone %><br />
+    <%= f.text_field :emergency_contact_phone %>
+  </p>
+  <p>
+    <%= button 'user', 'Update' %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @user %> |
+<%= link_to 'Back', users_path %>

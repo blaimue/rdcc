@@ -1,0 +1,9 @@
+<h1><%=h @program.name %> SIRs</h1>
+
+<%= render :partial => 'sirs/sir_list', :object => @program.sirs, :locals => {:empty_list_message => "No incidents reported for the #{@program.name} program"} %>
+
+<p>
+<%= link_to 'Back', programs_path %> |
+<%= link_to 'PDF', program_path(@program, :format => 'pdf') %>
+</p>
+

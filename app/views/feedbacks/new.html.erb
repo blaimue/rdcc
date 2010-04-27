@@ -1,0 +1,15 @@
+<h1>Send feedback</h1>
+
+<% form_for(@feedback) do |f| %>
+  <%= f.error_messages %>
+
+  If you're reporting a bug please include a detailed description of what caused the problem.
+
+  <p>
+    <%= f.label :comment %><br />
+    <%= f.text_area :comment %>
+  </p>
+  <p>
+	<%= button 'feedback', 'Send' %>
+  </p>
+<% end %>

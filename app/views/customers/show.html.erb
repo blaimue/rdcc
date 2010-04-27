@@ -1,0 +1,37 @@
+<h2>
+    Customer Information
+    <span>
+    <%= link_to 'Edit', edit_customer_path(@customer) %> |
+    <%= link_to 'Back', customers_path %>
+    </span>
+</h2>
+
+<p>
+    <b>Name:</b>
+    <%=h @customer.full_name %>
+</p>
+
+<p>
+    <b>Program:</b>
+    <%=h @customer.program.name %>
+</p>
+
+<p>
+    <b>Admitted on:</b>
+    <%=h @customer.admitted_on %>
+</p>
+
+<p>
+    <b>Released on:</b>
+    <%=h @customer.released_on %>
+</p>
+
+<br />
+<br />
+<br />
+
+
+<h2>SIRs <span><%= link_to 'PDF', customer_path(@customer, :format => 'pdf') unless @customer.sirs.empty? %></span></h2>
+
+<%= render :partial => 'sirs/sir_list', :object => @customer.sirs.sort{|a,b| b.incident_datetime <=> a.incident_datetime}, :locals => {:empty_list_message => "No reported incidents"} %>
+

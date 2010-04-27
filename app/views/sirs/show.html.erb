@@ -1,0 +1,154 @@
+<p>
+	<b>Program:</b>
+	<%=h @sir.program.name %>
+</p>
+
+<p>
+	<b>Location:</b>
+	<%=h @sir.location.name %>
+</p>
+
+<p>
+	<b>Datetime:</b>
+	<%=h @sir.incident_datetime %>
+</p>
+
+<p>
+	<b>Customers:</b>
+	<%=h @sir.customers.collect{|x| x.full_name}.to_sentence %>
+</p>
+
+<p>
+	<b>Staff:</b>
+	<%=h @sir.users.collect{|x| x.full_name}.to_sentence %>
+</p>
+
+<p>
+	<b>Incidents:</b>
+	<%=h @sir.incidenttypes.collect{|x| x.name}.to_sentence %>
+</p>
+
+<p>
+	<b>Interventions:</b>
+	<%=h @sir.interventions.collect{|x| x.name}.to_sentence %>
+</p>
+
+<p>
+	<b>Antecedent:</b>
+	<%=h @sir.antecedent %>
+</p>
+
+<p>
+	<b>Description:</b>
+	<%=h @sir.description %>
+</p>
+
+<p>
+	<b>Unsafe behavior:</b>
+	<%=h @sir.unsafe_behavior %>
+</p>
+
+<p>
+	<b>Lsi resolution:</b>
+	<%=h @sir.lsi_resolution %>
+</p>
+
+<p>
+	<b>Der time in:</b>
+	<%=h @sir.der_time_in %>
+</p>
+
+<p>
+	<b>Der time door:</b>
+	<%=h @sir.der_time_door %>
+</p>
+
+<p>
+	<b>Der time out:</b>
+	<%=h @sir.der_time_out %>
+</p>
+
+<p>
+	<b>Observation report completed:</b>
+	<%=h @sir.observation_report_completed %>
+</p>
+
+<p>
+	<b>Injury description:</b>
+	<%=h @sir.injury_description %>
+</p>
+
+<p>
+	<b>Injury firstaid:</b>
+	<%=h @sir.injury_firstaid %>
+</p>
+
+<p>
+	<b>Injury followup:</b>
+	<%=h @sir.injury_followup %>
+</p>
+
+<p>
+	<b>Medication description:</b>
+	<%=h @sir.medication_description %>
+</p>
+
+<p>
+	<b>Medication list:</b>
+	<%=h @sir.medication_list %>
+</p>
+
+<p>
+	<b>Medication results:</b>
+	<%=h @sir.medication_results %>
+</p>
+
+<p>
+	<b>Medication prevention:</b>
+	<%=h @sir.medication_prevention %>
+</p>
+
+<p>
+	<b>Police report number:</b>
+	<%=h @sir.police_report_number %>
+</p>
+
+<p>
+	<b>Police dispatcher name:</b>
+	<%=h @sir.police_dispatcher_name %>
+</p>
+
+<p>
+	<b>Police officer name:</b>
+	<%=h @sir.police_officer_name %>
+</p>
+
+<p>
+	<b>Police description:</b>
+	<%=h @sir.police_description %>
+</p>
+
+<p>
+	<b>Signatures</b><br />
+	<% for signature in @sir.signatures %>
+	<%= signature.role == Role.find_by_name("program_manager") ? "Locked" : "Signed" %> by <%= signature.user.short_name %> on <%= signature.created_at %><br />
+	<% end %>
+	<% unless @sir.locked or (@sir.signed and !@has_edit_access)%>
+	<p id="sign_sir">
+		<%= link_to_remote 'Click here to finalize and sign this SIR', :url => {:action => :show_sign, :sir_id => @sir.id}, :update => "sign_sir" %>
+	</p>
+	<% end %>
+	
+	<% if @sir.signed and !@sir.locked and @has_edit_access %>
+	    <%= link_to 'Revert to draft', :action => :revert_to_draft, :id => @sir.id %>
+    <% end %>
+	
+</p>
+
+<p>
+	<%= link_to_unless (@sir.locked or (@sir.signed and !@has_edit_access)), 'Edit', edit_sir_path(@sir)  %> |
+	<%= link_to 'Back', sirs_path %> |
+	<%= link_to 'PDF', sir_path(@sir, :format => 'pdf') %>
+</p>
+
+

@@ -1,0 +1,34 @@
+table {
+	border-collapse:collapse;
+}
+
+td {
+	border:solid 1px #ccc;
+	padding:4px;
+}
+
+.oldSirWarning {
+	color: red;
+	font-weight: bold;
+}
+
+label.changed {
+	color: red;
+}
+
+label {
+	font-weight:bold;
+}
+
+table label {
+	font-weight:normal;
+}
+
+input, textarea {
+	border:0;
+}
+
+p {
+	margin-bottom:0;
+}
+

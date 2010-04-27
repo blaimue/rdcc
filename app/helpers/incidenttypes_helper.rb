@@ -1,0 +1,2 @@
+module IncidenttypesHelper
+end

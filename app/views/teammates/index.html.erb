@@ -1,0 +1,25 @@
+<h1>Listing teammates</h1>
+
+<table>
+  <tr>
+    <th>First name</th>
+    <th>Last name</th>
+    <th>Job title</th>
+    <th>Email</th>
+  </tr>
+
+<% @teammates.each do |teammate| %>
+  <tr>
+    <td><%=h teammate.first_name %></td>
+    <td><%=h teammate.last_name %></td>
+    <td><%=h teammate.job_title %></td>
+    <td><%=h teammate.email %></td>
+    <td><%= link_to 'Show', teammate %></td>
+    <td><%= link_to 'Edit', edit_teammate_path(teammate) %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New teammate', new_teammate_path %>

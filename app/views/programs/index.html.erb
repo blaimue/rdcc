@@ -1,0 +1,15 @@
+<h1>Listing programs</h1>
+
+<table>
+  <tr>
+    <th>Name</th>
+  </tr>
+
+<% @programs.each do |program| %>
+  <tr>
+    <td><%=h program.name %></td>
+    <td><%= link_to 'Show', program_path(program) %></td>
+  </tr>
+<% end %>
+</table>
+

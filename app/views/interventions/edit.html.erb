@@ -1,0 +1,16 @@
+<h1>Editing intervention</h1>
+
+<% form_for(@intervention) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </p>
+  <p>
+    <%= button 'intervention', 'Update' %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @intervention %> |
+<%= link_to 'Back', interventions_path %>

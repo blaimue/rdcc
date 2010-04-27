@@ -1,0 +1,9 @@
+<% unless editable_person_list.nil? %>
+	<% for person in editable_person_list %>
+		<%= link_to_remote person.full_name, :update => "#{person_table}_list",
+			:url => {:method => :destroy, :action => "remove_#{person_table}", :id => @sir.id, :person_id => person.id},
+			:confirm => "Remove this #{person_table} from SIR?" %><br />
+	<% end %>
+<% end %>
+
+<span style="color: red"><%= flash[:error] %></span>

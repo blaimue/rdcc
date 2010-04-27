@@ -1,0 +1,24 @@
+<h1>Editing feedback</h1>
+
+<% form_for(@feedback) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :comment %><br />
+    <%= f.text_area :comment %>
+  </p>
+  <p>
+    <%= f.label :user_id %><br />
+  	<%=h "#{@feedback.user.short_name} (#{@feedback.user.email})" unless @feedback.user.nil? %>
+  </p>
+  <p>
+    <%= f.label :status %><br />
+    <%= f.text_field :status %>
+  </p>
+  <p>
+    <%= button 'feedback', 'Update' %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @feedback %> |
+<%= link_to 'Back', feedbacks_path %>

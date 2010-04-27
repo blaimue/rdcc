@@ -1,0 +1,13 @@
+<p>
+  <b>Description:</b>
+  <%=h @message.description %>
+</p>
+
+<p>
+  <b>Expiration:</b>
+  <%=h @message.expiration %>
+</p>
+
+
+<%= link_to 'Edit', edit_message_path(@message) %> |
+<%= link_to 'Back', messages_path %>

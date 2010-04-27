@@ -1,0 +1,185 @@
+<h1><%= @header %></h1>
+
+<% form_remote_tag :update => "customer_list", :url => {:action => :add_customer, :id => @sir.id} do %>
+	<input id="add_customer_name" name="sir[name]" type="text" style="display:none" />
+	<input type="submit" style="display:none">
+<% end %>
+<% form_remote_tag :update => "user_list", :url => {:action => :add_user, :id => @sir.id} do %>
+	<input id="add_user_name" name="sir[name]" type="text" style="display:none" />
+	<input type="submit" style="display:none">
+<% end %>
+
+<% form_for(@sir) do |f| %>
+	<%= f.error_messages %>
+
+	<p>
+		<%= f.label :program %><br />
+		<% for program in Program.all %>
+			<%= f.radio_button :program_id, program.id %> <%= f.label :program_id, program.name, :value => program.id %><br />
+		<% end %>
+	</p>
+	<p>
+		<%= f.label :location %><br />
+		<%= f.collection_select :location_id, Location.all, :id, :name %>
+	</p>
+	<p>
+		<label>Customers</label> <em>(click their names to delete)</em><br />
+		<div id="customer_list">
+			<%= render :partial => "editable_person_list", :object => @sir.customers, :locals => {:person_table => "customer"} %>
+		</div>
+	  <%= text_field_with_auto_complete :sir, :customer_name,
+			{ :size => 15, :autocomplete => "off", :onkeydown => "if(event.keyCode==13){addPersonToSir(this, 'customer');return false;}" },
+			{ :url => customers_path(:format => :js), :method => :get,
+				:param_name => 'search' } %>
+	</p>
+	<p>
+		<label>Staff involved</label> <em>(click their names to delete)</em><br />
+		<div id="user_list">
+			<%= render :partial => "editable_person_list", :object => @sir.users, :locals => {:person_table => "user"} %>
+		</div>
+	  <%= text_field_with_auto_complete :sir, :user_name,
+		{ :size => 15, :autocomplete => "off", :onkeydown => "if(event.keyCode==13){addPersonToSir(this, 'user');return false;}" },
+			{ :url => users_path(:format => :js), :method => :get,
+				:param_name => 'search' } %>
+	</p>
+	<p>
+		<%= f.label :incident_datetime %><br />
+		<%= f.text_field :incident_datetime, :value => @sir.incident_datetime %> <em>(eg, 'yesterday 10am')</em>
+	</p>
+	<p>
+		<%= f.label :interventions %><br />
+		<table><tr>
+			<% count = 0 %>
+			<% for intervention in Intervention.find(:all, :order => 'name asc') %>
+			<% if count % 4 == 0 and count > 0%>
+		</tr><tr>
+			<% end %>
+			<td>
+				<input type="checkbox" id="<%= "sir_intervention_ids_#{intervention.id}" %>" name="sir[intervention_ids][]" value="<%= intervention.id%>" <%= @sir.interventions.include?(intervention) ? '"checked"' : "" %>><label for="sir_intervention_ids_<%= intervention.id%>"><%= intervention.name %></label><br />
+			</td>
+			<% count += 1 %>
+			<% end %>
+			<% (4 - count%4).times do %>
+			<td></td>
+			<% end %>
+		</tr>
+	</table>
+</p>
+<p>
+	<%= f.label :incidenttypes, "Incident Types" %><br />
+	<table><tr>
+		<% count = 0 %>
+		<% for incidenttype in Incidenttype.find(:all, :order => 'name asc') %>
+		<% if count % 4 == 0 and count > 0%>
+	</tr><tr>
+		<% end %>
+		<td>
+			<input type="checkbox" id="<%= "sir_incidenttype_ids_#{incidenttype.id}" %>" name="sir[incidenttype_ids][]" value="<%= incidenttype.id%>" <%= @sir.incidenttypes.include?(incidenttype) ? '"checked"' : "" %>><label for="sir_incidenttype_ids_<%= incidenttype.id%>"><%= incidenttype.name %></label><br />
+		</td>
+		<% count += 1 %>
+		<% end %>
+		<% (4 - count%4).times do %>
+		<td></td>
+		<% end %>
+	</tr>
+</table>
+</p>
+<p>
+	<%= f.label :antecedent %><br />
+	<%= unconstrained_text_area f,  :antecedent %>
+</p>
+<p>
+	<%= f.label :description %><br />
+	<%= unconstrained_text_area f,  :description %>
+</p>
+<p>
+	<%= f.label :unsafe_behavior %><br />
+	<%= unconstrained_text_area f,  :unsafe_behavior %>
+</p>
+<p>
+	<%= f.label :lsi_resolution %><br />
+	<%= unconstrained_text_area f,  :lsi_resolution %>
+</p>
+<p>
+	<%= f.label :der_time_in %><br />
+	<%= formatted_date_field f, @sir, :der_time_in %>
+</p>
+<p>
+	<%= f.label :der_time_door %><br />
+	<%= formatted_date_field f, @sir, :der_time_door %>
+</p>
+<p>
+	<%= f.label :der_time_out %><br />
+	<%= formatted_date_field f, @sir, :der_time_out %>
+</p>
+<p>
+	<%= f.check_box :observation_report_completed %>
+	<%= f.label :observation_report_completed %>
+</p>
+<p>
+	<%= f.label :injury_description %><br />
+	<%= unconstrained_text_area f,  :injury_description %>
+</p>
+<p>
+	<%= f.label :injury_firstaid %><br />
+	<%= unconstrained_text_area f,  :injury_firstaid %>
+</p>
+<p>
+	<%= f.label :injury_followup %><br />
+	<%= unconstrained_text_area f,  :injury_followup %>
+</p>
+<p>
+	<%= f.label :medication_description %><br />
+	<%= unconstrained_text_area f,  :medication_description %>
+</p>
+<p>
+	<%= f.label :medication_list %><br />
+	<%= unconstrained_text_area f,  :medication_list %>
+</p>
+<p>
+	<%= f.label :medication_results %><br />
+	<%= unconstrained_text_area f,  :medication_results %>
+</p>
+<p>
+	<%= f.label :medication_prevention %><br />
+	<%= unconstrained_text_area f, :medication_prevention %>
+</p>
+<p>
+	<%= f.label :police_report_number %><br />
+	<%= f.text_field :police_report_number %>
+</p>
+<p>
+	<%= f.label :police_dispatcher_name %><br />
+	<%= f.text_field :police_dispatcher_name %>
+</p>
+<p>
+	<%= f.label :police_officer_name %><br />
+	<%= f.text_field :police_officer_name %>
+</p>
+<p>
+	<%= f.label :police_description %><br />
+	<%= unconstrained_text_area f,  :police_description %>
+</p>
+<p>
+	<%= f.label :staff_contacts %><br />
+
+</p>
+<p>
+	<%= f.label :teammate_contacts %><br />
+</p>
+
+
+
+<p>
+	<button value="Update" name="commit" id="sir_submit">Update</button>
+</p>
+<% end %>
+
+<%= set_focus_to_id 'sir_location' %>
+
+<p>
+    <%= link_to 'Back', sirs_path %>
+</p>
+
+
+

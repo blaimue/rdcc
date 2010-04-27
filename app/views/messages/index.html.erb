@@ -1,0 +1,22 @@
+<h1>Listing messages</h1>
+
+<table>
+  <tr>
+    <th>Description</th>
+    <th>Expiration</th>
+  </tr>
+
+<% @messages.each do |message| %>
+  <tr>
+    <td style="max-width:500px;"><%=h message.description %></td>
+    <td><%=h message.expiration %></td>
+    <td><%= link_to 'Edit', edit_message_path(message) %></td>
+    <td><%= link_to 'Discontinue', discontinue_message_path(message), :discontinue => true unless message.expiration < Time.now %></td>
+    <td><%= link_to 'Destroy', message, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New message', new_message_path %>

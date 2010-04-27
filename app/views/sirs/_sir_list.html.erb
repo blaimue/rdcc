@@ -1,0 +1,35 @@
+<% show_sir_warning ||= false %>
+<% empty_list_message ||= "No SIRs in progress" %>
+
+<% if sir_list.nil? or sir_list.length == 0%>
+<p><em><%= empty_list_message %></em></p>
+<% else %>
+	<table>
+	  <tr>
+		<th>When</th>
+		<th>Who</th>
+		<th>What</th>
+		<th>Signed</th>
+	  </tr>
+
+	<% sir_list.each do |sir| %>
+	  <tr>
+	    <td class="<%= show_sir_warning and !sir.incident_datetime.nil? and sir.incident_datetime < 2.days.ago ? "oldSirWarning" : "" %>">
+			<%=h sir.incident_datetime %>
+		</td>
+	    <td><%=h sir.customers_to_string %></td>
+		<td><%=h sir.title %></td>
+		<td><%=h sir.signatories_to_string %></td>
+		<% if sir.locked %>
+			<td><em>Locked</em></td>
+		<% elsif sir.signed and !@has_edit_access %>
+    		<td><em>Pending</em></td>
+		<% else %>
+    		<td><%= link_to 'Edit', edit_sir_path(sir) %></td>
+		<% end %>
+	    <td><%= link_to 'Review', sir %></td>
+	    <td><%= link_to 'Delete', sir, :confirm => 'Are you sure?', :method => :delete unless sir.signed%></td>
+	  </tr>
+	<% end %>
+	</table>
+<% end %>

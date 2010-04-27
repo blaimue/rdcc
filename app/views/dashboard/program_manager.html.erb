@@ -1,0 +1,11 @@
+<%= link_to 'Create new SIR', new_sir_path %>
+
+<div>
+	<h2>Inbox</h2>
+	<%= render :partial => 'sirs/sir_list', :object => @signed_sirs, :locals => {:show_sir_warning => true, :empty_list_message => "No SIRs need your attention"} %>
+</div>
+
+<div>
+	<h2>Drafts</h2>
+	<%= render :partial => 'sirs/sir_list', :object => @draft_sirs, :locals => {:show_sir_warning => true} %>
+</div>

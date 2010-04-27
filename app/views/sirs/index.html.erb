@@ -1,0 +1,7 @@
+<h1>Listing SIRs</h1>
+
+<%= render :partial => 'sir_list', :object => @sirs, :locals => {:empty_list_message => "No SIRs reported"} %>
+
+<p>
+<%= link_to 'New SIR', new_sir_path %>
+</p>

@@ -1,0 +1,16 @@
+<h1>Editing incidenttype</h1>
+
+<% form_for(@incidenttype) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </p>
+  <p>
+    <%= button 'incidenttype', 'Update' %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @incidenttype %> |
+<%= link_to 'Back', incidenttypes_path %>

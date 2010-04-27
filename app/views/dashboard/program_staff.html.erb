@@ -1,0 +1,4 @@
+<%= link_to 'Create new SIR', new_sir_path %>
+
+<h2>Drafts</h2>
+<%= render :partial => 'sirs/sir_list', :object => @draft_sirs, :locals => {:show_sir_warning => true} %>

@@ -1,0 +1,59 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+  <title>RDCC <%= controller.controller_name.capitalize %> | <%= controller.action_name.capitalize %></title>
+  <%= stylesheet_link_tag 'scaffold' %>
+  <%= stylesheet_link_tag 'rdcc' %>
+  <%= stylesheet_link_tag 'rdcc_datasystem' %>
+  <%= javascript_include_tag :defaults %>
+</head>
+<body>
+
+	<a href="/"><img src="/images/rdccBackdrop.png" style="position:absolute;top:0px;left:0px;height:100px;left:133px;top:4px;border:none;"></a>
+
+	<div id="main" style="background:#d1c7ac;padding:10px;position:relative;top:100px;min-width:900px;">
+		<div style="background:#f0f2e7;padding:10px;padding-top:40px;">
+			<div style="position:absolute;top:20px;left:140px;">
+				<%= link_to "Users", users_path %>&nbsp;&nbsp;&nbsp;
+                <!-- <%= link_to "Workorders", workorders_path %>&nbsp;&nbsp;&nbsp; -->
+				<%= link_to "Customers", customers_path %>&nbsp;&nbsp;&nbsp;
+				<%= link_to "Programs", programs_path %>&nbsp;&nbsp;&nbsp;
+				<%= link_to "Teammates", teammates_path %>&nbsp;&nbsp;&nbsp;
+				<%= link_to "SIRs", sirs_path %>&nbsp;&nbsp;&nbsp;
+				<%= link_to "Feedback", bugs_path %>&nbsp;&nbsp;&nbsp;
+			</div>
+			
+			<% unless @motds.nil? or @motds.empty? %>
+			<div class="motd">
+			    <ul>
+			    <% for message in @motds %>
+			        <li><%= message.description %></li>
+			    <% end %>
+		        </ul>
+			</div>
+			<% end %>
+			
+			<p style="color: green"><%= flash[:notice] %></p>
+			<p style="color: red"><%= flash[:error] %></p>
+
+			<%= yield %>
+
+		</div>
+		<% if session[:user_email] %>
+			<span style="font-size:8pt;">Logged in as <%= session[:user_email] %></span>
+			<span style="font-size:8pt; margin-left: 30px;"><%= link_to 'Logout', :controller => :sessions, :action => :destroy %></span>
+		<% end %>
+	</div>
+
+<a href="/"><img src="/images/logoRDCC.png" style="position:absolute;top:0px;left:17px;border:none;"></a>
+<a href="/"><img src="/images/success.png" style="position:absolute;right:10px;top:75px;border:none;"></a>
+
+<script type="text/javascript">
+setAutoExpandTextareas(5, 60);
+setReminders();
+</script>
+</body>
+</html>

@@ -1,0 +1,68 @@
+<p>
+  <b>Sir:</b>
+  <%=h @workorder.sir_id %>
+</p>
+
+<p>
+  <b>Priority:</b>
+  <%=h @workorder.priority %>
+</p>
+
+<p>
+  <b>Status:</b>
+  <%=h @workorder.status %>
+</p>
+
+<p>
+  <b>Program:</b>
+  <%=h @workorder.program %>
+</p>
+
+<p>
+  <b>Location:</b>
+  <%=h @workorder.location %>
+</p>
+
+<p>
+  <b>Description:</b>
+  <%=h @workorder.description %>
+</p>
+
+<p>
+  <b>Risk:</b>
+  <%=h @workorder.risk %>
+</p>
+
+<p>
+  <b>User:</b>
+  <%=h @workorder.user_id %>
+</p>
+
+<p>
+  <b>Estimation:</b>
+  <%=h @workorder.estimation %>
+</p>
+
+<p>
+  <b>Cost:</b>
+  <%=h @workorder.cost %>
+</p>
+
+<p>
+  <b>Completed on:</b>
+  <%=h @workorder.completed_on %>
+</p>
+
+<p>
+  <b>Notify on complete:</b>
+  <%=h @workorder.notify_on_complete %>
+</p>
+
+<p>
+  <b>Note:</b>
+  <%=h @workorder.note %>
+</p>
+
+
+<%= link_to 'Edit', edit_workorder_path(@workorder) %> |
+<%= link_to 'Back', workorders_path %>

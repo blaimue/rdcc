@@ -1,0 +1,23 @@
+<p>
+  <b>First name:</b>
+  <%=h @teammate.first_name %>
+</p>
+
+<p>
+  <b>Last name:</b>
+  <%=h @teammate.last_name %>
+</p>
+
+<p>
+  <b>Job title:</b>
+  <%=h @teammate.job_title %>
+</p>
+
+<p>
+  <b>Email:</b>
+  <%=h @teammate.email %>
+</p>
+
+
+<%= link_to 'Edit', edit_teammate_path(@teammate) %> |
+<%= link_to 'Back', teammates_path %>

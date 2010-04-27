@@ -1,0 +1,33 @@
+<h1>New customer</h1>
+
+<% form_for(@customer) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :first_name %><br />
+    <%= f.text_field :first_name %>
+  </p>
+  <p>
+    <%= f.label :last_name %><br />
+    <%= f.text_field :last_name %>
+  </p>
+	<p>
+		<%= f.label :program %><br />
+		<% for program in Program.all %>
+			<%= f.radio_button :program_id, program.id %> <%= f.label :program_id, program.name, :value => program.id %><br />
+		<% end %>
+	</p>
+  <p>
+    <%= f.label :admitted_on %><br />
+    <%= f.text_field :admitted_on %>
+  </p>
+  <p>
+    <%= f.label :released_on %><br />
+    <%= f.text_field :released_on %>
+  </p>
+  <p>
+    <%= button 'customer', 'Create' %>
+  </p>
+<% end %>
+
+<%= link_to 'Back', customers_path %>
