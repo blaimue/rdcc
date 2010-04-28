@@ -43,6 +43,16 @@
     <%= f.label :emergency_contact_phone %><br />
     <%= f.text_field :emergency_contact_phone %>
   </p>
+  <% if session[:user_id] == @user.id %>
+      <p>
+        <%= f.label :password %><br />
+        <%= f.text_field :password %>
+      </p>
+      <p>
+        <%= f.label :password_confirmation %><br />
+        <%= f.text_field :password_confirmation %>
+      </p>
+  <% end %>
   <p>
     <%= button 'user', 'Update' %>
   </p>
