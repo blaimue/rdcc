@@ -17,13 +17,15 @@
 	<div id="main" style="background:#d1c7ac;padding:10px;position:relative;top:100px;min-width:900px;">
 		<div style="background:#f0f2e7;padding:10px;padding-top:40px;">
 			<div style="position:absolute;top:20px;left:140px;">
-				<%= link_to "Users", users_path %>&nbsp;&nbsp;&nbsp;
-                <!-- <%= link_to "Workorders", workorders_path %>&nbsp;&nbsp;&nbsp; -->
-				<%= link_to "Customers", customers_path %>&nbsp;&nbsp;&nbsp;
-				<%= link_to "Programs", programs_path %>&nbsp;&nbsp;&nbsp;
-				<%= link_to "Teammates", teammates_path %>&nbsp;&nbsp;&nbsp;
-				<%= link_to "SIRs", sirs_path %>&nbsp;&nbsp;&nbsp;
-				<%= link_to "Feedback", bugs_path %>&nbsp;&nbsp;&nbsp;
+			    <% unless controller.controller_name == 'sessions' %>
+    				<%= link_to "Users", users_path %>&nbsp;&nbsp;&nbsp;
+                    <!-- <%= link_to "Workorders", workorders_path %>&nbsp;&nbsp;&nbsp; -->
+    				<%= link_to "Customers", customers_path %>&nbsp;&nbsp;&nbsp;
+    				<%= link_to "Programs", programs_path %>&nbsp;&nbsp;&nbsp;
+    				<%= link_to "Teammates", teammates_path %>&nbsp;&nbsp;&nbsp;
+    				<%= link_to "SIRs", sirs_path %>&nbsp;&nbsp;&nbsp;
+    				<%= link_to "Feedback", bugs_path %>&nbsp;&nbsp;&nbsp;
+				<% end %>
 			</div>
 			
 			<% unless @motds.nil? or @motds.empty? %>
