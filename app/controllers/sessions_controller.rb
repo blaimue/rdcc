@@ -6,6 +6,7 @@ class SessionsController < ApplicationController
   
   # render new.rhtml
   def new
+    @noReminders = true
   end
 
   def create

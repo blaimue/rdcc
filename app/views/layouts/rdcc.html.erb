@@ -53,7 +53,11 @@
 
 <script type="text/javascript">
 setAutoExpandTextareas(5, 60);
-setReminders();
 </script>
+<% unless @noReminders %>
+    <script type="text/javascript">
+        setReminders();
+    </script>
+<% end %>
 </body>
 </html>
