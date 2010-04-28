@@ -28,7 +28,7 @@
 				<% end %>
 			</div>
 			
-			<% unless @motds.nil? or @motds.empty? %>
+			<% unless @motds.nil? or @motds.empty? or controller.controller_name == 'sessions' %>
 			<div class="motd">
 			    <ul>
 			    <% for message in @motds %>
