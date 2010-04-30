@@ -1,11 +1,11 @@
 <p>
 	<b>Program:</b>
-	<%=h @sir.program.name %>
+	<%=h @sir.program.name unless @sir.nil? or @sir.program.nil? %>
 </p>
 
 <p>
 	<b>Location:</b>
-	<%=h @sir.location.name %>
+	<%=h @sir.location.name unless @sir.nil? or @sir.location.nil? %>
 </p>
 
 <p>
