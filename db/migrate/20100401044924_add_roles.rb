@@ -5,6 +5,7 @@ class AddRoles < ActiveRecord::Migration
     Role.create({:name => "workorder_staff", :display => "Workorder Staff"})
     Role.create({:name => "workorder_manager", :display => "Workorder Manager"})
     Role.create({:name => "hr", :display => "HR"})
+    Role.create({:name => "hr_manager", :display => "HR Manager"})
     
     user = User.find(:first)
     user.roles << Role.find_by_name("hr")

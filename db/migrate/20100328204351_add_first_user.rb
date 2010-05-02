@@ -5,6 +5,8 @@ class AddFirstUser < ActiveRecord::Migration
       :email => "blaimue@gmail.com",
       :job_title => "Independent contractor",
       :status => User.STATUS[:parttime],
+      :password => "",
+      :password_confirmation => "",
       :dashboard => 2
     })
   end

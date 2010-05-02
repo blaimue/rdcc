@@ -67,6 +67,12 @@ class UsersController < ApplicationController
     respond_to do |format|
       if @user.save
         flash[:notice] = 'Your account was successfully created.'
+        hr_managers = Role.find_by_name("hr_manager")
+        unless hr_managers.nil?
+          for recipient in hr_managers.users
+            UserMailer.deliver_new(recipient.email, @user)
+          end
+        end
         format.html { redirect_to :controller => :dashboard }
         format.xml  { render :xml => @user, :status => :created, :location => @user }
       else
