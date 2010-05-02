@@ -49,5 +49,11 @@ class ApplicationController < ActionController::Base
     end
     return false
   end
+  
+  protected
+  def log_error(ex)
+    logger.error(session[:user_email])
+    super
+  end
 
 end
