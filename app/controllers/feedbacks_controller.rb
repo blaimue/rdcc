@@ -60,6 +60,7 @@ class FeedbacksController < ApplicationController
     respond_to do |format|
       if @feedback.save
         flash[:notice] = 'Thanks for the comment, you\'ll hear back soon.'
+        FeedbackMailer.deliver_new(@feedback)
         format.html { redirect_to root_path }
         format.xml  { render :xml => @feedback, :status => :created, :location => @feedback }
       else
