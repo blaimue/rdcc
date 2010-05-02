@@ -2,3 +2,5 @@
 log
 db/development.sqlite3
 db/production.sqlite3
+*.bak
+
