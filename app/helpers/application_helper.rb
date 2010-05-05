@@ -14,7 +14,7 @@ module ApplicationHelper
   end
   
   def button(object_type, name)
-    '<button value="Update" name="commit" id="' + object_type + '_submit">' + name + '</button>'
+    '<button type="submit" value="Update" name="commit" id="' + object_type + '_submit">' + name + '</button>'
   end
 
   def write_sir(pdf, sir)

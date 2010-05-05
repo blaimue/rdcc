@@ -53,9 +53,11 @@
 <a href="/"><img src="/images/logoRDCC.png" style="position:absolute;top:0px;left:17px;border:none;"></a>
 <a href="/"><img src="/images/success.png" style="position:absolute;right:10px;top:75px;border:none;"></a>
 
+<% unless controller.controller_name == 'sessions' %>
 <script type="text/javascript">
 setAutoExpandTextareas(5, 60);
 </script>
+<% end %>
 <% unless @noReminders %>
     <script type="text/javascript">
         setReminders();
