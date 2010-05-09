@@ -23,9 +23,6 @@ class UsersController < ApplicationController
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @users }
-      format.js {
-        @users = User.find(:all, :conditions => ['first_name LIKE ? or last_name LIKE ?', "%#{params[:search]}%", "%#{params[:search]}%"])
-      }
     end
   end
 

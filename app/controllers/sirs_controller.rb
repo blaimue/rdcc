@@ -84,8 +84,8 @@ class SirsController < ApplicationController
   # GET /sirs/new
   # GET /sirs/new.xml
   def new
-    @sir = Sir.create
-    redirect_to edit_sir_path(@sir)
+    @sir = Sir.new
+    render :edit
     # @header = "New SIR"
     # @submit_button = "Create"
     # render :edit

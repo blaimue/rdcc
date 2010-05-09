@@ -13,7 +13,7 @@
 
 <p>
     <b>Program:</b>
-    <%=h @customer.program.name %>
+    <%=h @customer.program.name unless @customer.program.nil? %>
 </p>
 
 <p>

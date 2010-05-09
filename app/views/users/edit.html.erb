@@ -31,7 +31,7 @@
   <p>
     <%= f.label :roles %><br />
 	<% for role in Role.all %>
-	    <input type="checkbox" id="<%= "user_role_ids_#{role.id}" %>" name="user[role_ids][]" value="<%= role.id%>" <%= @user.roles.include?(role) ? '"checked"' : "" %>>
+	    <input type="checkbox" id="<%= "user_role_ids_#{role.id}" %>" name="user[role_ids][]" value="<%= role.id%>" <%= @user.roles.include?(role) ? '"checked=true"' : "" %>>
             <label for="user_role_ids_<%= role.id%>"><%= role.display %></label><br />
 	<% end %>
   </p>
