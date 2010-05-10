@@ -19,6 +19,7 @@ class User < ActiveRecord::Base
   has_many :signatures
   has_many :signed_sirs, :through => :signatures, :source => :sir
   has_many :feedbacks
+  has_many :followups
   has_many :notifications_sent, :class_name => "Notification", :foreign_key => :notified_by
   has_many :notifications_received, :class_name => "Notification", :foreign_key => :user_id
   has_and_belongs_to_many :sirs

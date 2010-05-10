@@ -8,6 +8,7 @@ class Sir < ActiveRecord::Base
   has_many :signatures
   has_many :signatories, :through => :signatures, :source => :user
   has_many :notifications
+  has_many :followups
   
   has_many :workorders
   

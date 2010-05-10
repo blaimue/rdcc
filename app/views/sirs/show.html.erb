@@ -1,3 +1,22 @@
+
+<% if @sir.locked %>
+<label>Followup:</label>
+<p>
+    <% form_for @sir, :url => {:action => :followup} do |f| %>
+        <% fields_for @sir.followups.build do |g| %>
+            <%= g.text_field :comment %> <%= button 'followup', "Comment" %>
+        <% end %>
+    <% end %>
+</p>
+<p>
+    <% for followup in @sir.followups.reject{|x| x.nil? or x.created_at.nil? }.sort{|a,b| b.created_at <=> a.created_at } %>
+        <%= followup.user.short_name %>, <%= followup.created_at.strftime('%b %d %Y') %>: <%= followup.comment %><br />
+    <% end %>
+    <br />
+    <br />
+</p>
+<% end %>
+
 <p>
 	<b>Program:</b>
 	<%=h @sir.program.name unless @sir.nil? or @sir.program.nil? %>

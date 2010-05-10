@@ -18,9 +18,9 @@ module ApplicationHelper
   end
 
   def write_sir(pdf, sir)
-    pdf.text "Program: #{ sir.program.name }" unless sir.program.name.nil? or sir.program.name.empty?
+    pdf.text "Program: #{ sir.program.name }" unless sir.program.nil? or sir.program.name.nil? or sir.program.name.empty?
 
-    pdf.text "Location: #{ sir.location }" unless sir.location.nil? or sir.location.empty?
+    pdf.text "Location: #{ sir.location.name }" unless sir.location.nil? or sir.location.name.nil? or sir.location.name.empty?
 
     pdf.text "Datetime: #{ sir.incident_datetime }" unless sir.incident_datetime.nil?
 
@@ -73,7 +73,7 @@ module ApplicationHelper
     pdf.text "Signatures:" unless sir.signatures.nil? or sir.signatures.empty?
 
     for signature in sir.signatures
-        pdf.text "Signed by #{signature.user.full_name} on #{signature.created_at}" unless sir..nil? or sir..empty?
+        pdf.text "Signed by #{signature.user.full_name} on #{signature.created_at}" unless signature.nil? or signature.user.nil?
     end
   end
 end
