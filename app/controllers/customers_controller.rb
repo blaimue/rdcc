@@ -8,7 +8,12 @@ class CustomersController < ApplicationController
   # GET /customers
   # GET /customers.xml
   def index
-    @customers = Customer.all
+    find_options = {:order => "last_name asc, first_name asc"}
+    @customers = Customer.all(find_options)
+
+    unless (params[:show] == "all")
+      @customers.reject!{|x| !x.released_on.nil? and x.released_on < Date.today}
+    end
 
     respond_to do |format|
       format.html # index.html.erb
@@ -60,7 +65,7 @@ class CustomersController < ApplicationController
     respond_to do |format|
       if @customer.save
         flash[:notice] = 'Customer was successfully created.'
-        format.html { redirect_to(@customer) }
+        format.html { redirect_to new_customer_path }
         format.xml  { render :xml => @customer, :status => :created, :location => @customer }
       else
         format.html { render :action => "new" }

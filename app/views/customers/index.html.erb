@@ -2,16 +2,14 @@
 
 <table>
   <tr>
-    <th>Last name</th>
-    <th>First name</th>
+    <th>Name (last, first)</th>
     <th>Admitted on</th>
     <th>Released on</th>
   </tr>
 
 <% @customers.each do |customer| %>
   <tr>
-    <td><%=h customer.last_name %></td>
-    <td><%=h customer.first_name %></td>
+    <td><%=h customer.last_name %>, <%=h customer.first_name %></td>
     <td><%=h customer.admitted_on %></td>
     <td><%=h customer.released_on %></td>
     <td><%= link_to 'Show', customer %></td>
@@ -20,6 +18,12 @@
 <% end %>
 </table>
 
-<br />
-
+<p>
 <%= link_to 'New customer', new_customer_path %>
+</p>
+
+<p>
+	Show:
+	<%= link_to 'active', customers_path %> |
+	<%= link_to 'all', customers_path(:show => "all") %>
+</p>
