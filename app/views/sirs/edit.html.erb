@@ -1,14 +1,5 @@
 <h1><%= @header %></h1>
 
-<% form_remote_tag :update => "customer_list", :url => {:action => :add_customer, :id => @sir.id} do %>
-	<input id="add_customer_name" name="sir[name]" type="text" style="display:none" />
-	<input type="submit" style="display:none">
-<% end %>
-<% form_remote_tag :update => "user_list", :url => {:action => :add_user, :id => @sir.id} do %>
-	<input id="add_user_name" name="sir[name]" type="text" style="display:none" />
-	<input type="submit" style="display:none">
-<% end %>
-
 <% form_for(@sir) do |f| %>
 	<%= f.error_messages %>
 
@@ -23,24 +14,31 @@
 		<%= f.collection_select :location_id, Location.all, :id, :name %>
 	</p>
 	<p>
-		<label>Customers</label> <em>(click their names to delete)</em><br />
-		<div id="customer_list">
-			<%= render :partial => "editable_person_list", :object => @sir.customers, :locals => {:person_table => "customer"} %>
-		</div>
-	  <%= text_field_with_auto_complete :sir, :customer_name,
-			{ :size => 15, :autocomplete => "off", :onkeydown => "if(event.keyCode==13){addPersonToSir(this, 'customer');return false;}" },
-			{ :url => customers_path(:format => :js), :method => :get,
-				:param_name => 'search' } %>
-	</p>
-	<p>
-		<label>Staff involved</label> <em>(click their names to delete)</em><br />
-		<div id="user_list">
-			<%= render :partial => "editable_person_list", :object => @sir.users, :locals => {:person_table => "user"} %>
-		</div>
-	  <%= text_field_with_auto_complete :sir, :user_name,
-		{ :size => 15, :autocomplete => "off", :onkeydown => "if(event.keyCode==13){addPersonToSir(this, 'user');return false;}" },
-			{ :url => users_path(:format => :js), :method => :get,
-				:param_name => 'search' } %>
+	    <label>Customers <span style="position:relative;left:250px;">Staff involved</span> </label>
+	    <table><tr><td>
+	        <div style="overflow-x:hidden;overflow-y:auto;width:300px;max-height:200px;">
+        <% for customer in Customer.find(:all, :order => 'first_name asc, last_name asc') %>
+    		<input type="checkbox"
+    		    id="<%= "sir_customer_ids_#{customer.id}" %>"
+    		    name="sir[customer_ids][]"
+    		    value="<%= customer.id %>"
+    		    <%= @sir.customers.include?(customer) ? '"checked=true"' : "" %>>
+    		<label for="sir_customer_ids_<%= customer.id%>"><%= customer.full_name %></label>
+    		<br />
+		<% end %>
+	    </div>
+	</td><td>
+        <div style="overflow:hidden;overflow-y:auto;width:300px;max-height:200px;">
+		<% for user in User.find(:all, :order => 'first_name asc, last_name asc') %>
+			<input type="checkbox"
+			    id="<%= "sir_user_ids_#{user.id}" %>"
+			    name="sir[user_ids][]"
+			    value="<%= user.id%>" <%= @sir.users.include?(user) ? '"checked=true"' : "" %>>
+			<label for="sir_user_ids_<%= user.id%>"><%= user.full_name %></label>
+			<br />
+		<% end %>
+	</div>
+	</td></tr></table>
 	</p>
 	<p>
 		<%= f.label :incident_datetime %><br />
@@ -51,16 +49,23 @@
 		<table><tr>
 			<% count = 0 %>
 			<% for intervention in Intervention.find(:all, :order => 'name asc') %>
-			<% if count % 4 == 0 and count > 0%>
-		</tr><tr>
+			    <% if count % 4 == 0 and count > 0%>
+        		    </tr><tr>
+			    <% end %>
+    			<td>
+    				<input type="checkbox"
+    				    id="<%= "sir_intervention_ids_#{intervention.id}" %>"
+    				    name="sir[intervention_ids][]"
+    				    value="<%= intervention.id%>" <%= @sir.interventions.include?(intervention) ? '"checked=true"' : "" %>>
+    				    <label for="sir_intervention_ids_<%= intervention.id%>"><%= intervention.name %></label>
+    				    <br />
+    			</td>
+			    <% count += 1 %>
 			<% end %>
-			<td>
-				<input type="checkbox" id="<%= "sir_intervention_ids_#{intervention.id}" %>" name="sir[intervention_ids][]" value="<%= intervention.id%>" <%= @sir.interventions.include?(intervention) ? '"checked"' : "" %>><label for="sir_intervention_ids_<%= intervention.id%>"><%= intervention.name %></label><br />
-			</td>
-			<% count += 1 %>
-			<% end %>
+			<% unless count%4 == 0 %>
 			<% (4 - count%4).times do %>
-			<td></td>
+                <td></td>
+			<% end %>
 			<% end %>
 		</tr>
 	</table>
@@ -74,12 +79,14 @@
 	</tr><tr>
 		<% end %>
 		<td>
-			<input type="checkbox" id="<%= "sir_incidenttype_ids_#{incidenttype.id}" %>" name="sir[incidenttype_ids][]" value="<%= incidenttype.id%>" <%= @sir.incidenttypes.include?(incidenttype) ? '"checked"' : "" %>><label for="sir_incidenttype_ids_<%= incidenttype.id%>"><%= incidenttype.name %></label><br />
+			<input type="checkbox" id="<%= "sir_incidenttype_ids_#{incidenttype.id}" %>" name="sir[incidenttype_ids][]" value="<%= incidenttype.id%>" <%= @sir.incidenttypes.include?(incidenttype) ? '"checked=true"' : "" %>><label for="sir_incidenttype_ids_<%= incidenttype.id%>"><%= incidenttype.name %></label><br />
 		</td>
 		<% count += 1 %>
 		<% end %>
-		<% (4 - count%4).times do %>
-		<td></td>
+		<% unless count%4 == 0 %>
+		    <% (4 - count%4).times do %>
+		    <td></td>
+		    <% end %>
 		<% end %>
 	</tr>
 </table>
@@ -167,8 +174,6 @@
 	<button type="submit" value="Update" name="commit" id="sir_submit">Update</button>
 </p>
 <% end %>
-
-<%= set_focus_to_id 'sir_location' %>
 
 <p>
     <%= link_to 'Back', sirs_path %>

@@ -13,7 +13,7 @@
 
 <p>
     <b>Program:</b>
-    <%=h @customer.program.name %>
+    <%=h @customer.program.name unless @customer.program.nil? %>
 </p>
 
 <p>
@@ -33,5 +33,11 @@
 
 <h2>SIRs <span><%= link_to 'PDF', customer_path(@customer, :format => 'pdf') unless @customer.sirs.empty? %></span></h2>
 
-<%= render :partial => 'sirs/sir_list', :object => @customer.sirs.sort{|a,b| b.incident_datetime <=> a.incident_datetime}, :locals => {:empty_list_message => "No reported incidents"} %>
+<%= render :partial => 'sirs/sir_list', :object => @customer.sirs.sort{|a,b|
+    if a.incident_datetime.nil? or b.incident_datetime.nil?
+        0
+    else
+        b.incident_datetime <=> a.incident_datetime
+    end
+    }, :locals => {:empty_list_message => "No reported incidents"} unless @customer.nil? or @customer.sirs.nil? %>
 

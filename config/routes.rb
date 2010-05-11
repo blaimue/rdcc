@@ -8,10 +8,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :programs
 
   
-  map.connect '/sirs/:id/add_customer', :controller => 'sirs', :action => 'add_customer'
-  map.connect '/sirs/:id/remove_customer/:person_id', :controller => 'sirs', :action => 'remove_customer'
-  map.connect '/sirs/:id/add_user', :controller => 'sirs', :action => 'add_user'
-  map.connect '/sirs/:id/remove_user/:person_id', :controller => 'sirs', :action => 'remove_user'
+  map.followup '/sirs/:id/followup', :controller => 'sirs', :action => 'followup'
   map.discontinue_message '/messages/:id/discontinue', :controller => 'messages', :action => 'discontinue'
   map.bugs 'feedback', :controller => 'feedbacks', :action => 'new'
   

@@ -23,9 +23,6 @@ class UsersController < ApplicationController
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @users }
-      format.js {
-        @users = User.find(:all, :conditions => ['first_name LIKE ? or last_name LIKE ?', "%#{params[:search]}%", "%#{params[:search]}%"])
-      }
     end
   end
 
@@ -61,8 +58,6 @@ class UsersController < ApplicationController
   # POST /users.xml
   def create
     @user = User.new(params[:user])
-    @user.roles << Role.find_by_name("hr")
-    @user.roles << Role.find_by_name("program_staff")
 
     respond_to do |format|
       if @user.save

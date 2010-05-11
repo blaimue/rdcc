@@ -84,8 +84,8 @@ class SirsController < ApplicationController
   # GET /sirs/new
   # GET /sirs/new.xml
   def new
-    @sir = Sir.create
-    redirect_to edit_sir_path(@sir)
+    @sir = Sir.new
+    render :edit
     # @header = "New SIR"
     # @submit_button = "Create"
     # render :edit
@@ -189,13 +189,23 @@ class SirsController < ApplicationController
   def update
     parse_date_fields
     @sir = Sir.find(params[:id])
-
+    
     if @sir.update_attributes(params[:sir])
       flash[:notice] = 'Sir was successfully updated.'
       redirect_to edit_sir_path(@sir)
     else
       render :action => "edit"
     end
+  end
+
+  def followup
+    sir = Sir.find(params[:id])
+    unless sir.nil? or params[:followup].nil?
+      followup = sir.followups.create(params[:followup])
+      followup.user_id = session[:user_id]
+      followup.save
+    end
+    redirect_to sir
   end
 
   # DELETE /sirs/1
@@ -220,9 +230,11 @@ private
   end
   
   def parse_date_fields
-    params[:sir][:incident_datetime] = Chronic.parse(params[:sir][:incident_datetime])
-    params[:sir][:der_time_in] = Chronic.parse(params[:sir][:der_time_in])
-    params[:sir][:der_time_door] = Chronic.parse(params[:sir][:der_time_door])
-    params[:sir][:der_time_out] = Chronic.parse(params[:sir][:der_time_out])
+    unless params[:sir].nil?
+      params[:sir][:incident_datetime] = Chronic.parse(params[:sir][:incident_datetime]) unless params[:sir][:incident_datetime].nil?
+      params[:sir][:der_time_in] = Chronic.parse(params[:sir][:der_time_in]) unless params[:sir][:der_time_in].nil?
+      params[:sir][:der_time_door] = Chronic.parse(params[:sir][:der_time_door]) unless params[:sir][:der_time_door].nil?
+      params[:sir][:der_time_out] = Chronic.parse(params[:sir][:der_time_out]) unless params[:sir][:der_time_out].nil?
+    end
   end
 end
