@@ -1,8 +1,8 @@
 class UsersController < ApplicationController
   layout 'rdcc'
   
-  skip_before_filter :authenticate, :only => [:create, :new]
-  before_filter :check_access, :except => [:create, :new, :index]
+  skip_before_filter :authenticate, :only => [:create, :new, :forgot_password, :reset_password]
+  before_filter :check_access, :except => [:create, :new, :index, :forgot_password, :reset_password]
   
   def check_access
     unless has_access? Role.find_by_name("hr")
@@ -110,4 +110,53 @@ class UsersController < ApplicationController
       format.xml  { head :ok }
     end
   end
+  
+  def forgot_password
+    if request.post?
+      user = User.find_by_email(params[:email])
+      if user.nil?
+        flash.now[:error] = "Sorry, no user with that email exists."
+      else
+        user.remember_token = new_token
+        user.remember_token_expires_at = 30.days.to_i.from_now
+        if user.save
+          email = UserMailer.create_remember_token(user)
+          email.set_content_type("text/html")
+          UserMailer.deliver(email)
+          flash.now[:notice] = "A link to reset your password has been emailed to you."
+        else
+          flash.now[:error] = "Sorry, something went wrong."
+        end
+      end
+    end
+  end
+  
+  def reset_password
+    @token = params[:token]
+    if request.post?
+      user = User.find_by_email(params[:email])
+      if user.remember_token == params[:token] and user.remember_token_expires_at > Time.now
+        user.password = params[:password]
+        user.password_confirmation = params[:password_confirmation]
+        user.remember_token = nil
+        user.remember_token_expires_at = nil
+        if user.save
+          flash[:notice] = "Password saved, please log in."
+          redirect_to login_path
+        end
+      end
+      flash.now[:error] = "Unable to update password"
+    end
+  end
+  
+  private
+  def new_token
+    possible = "abcdefghijklmnopqrstuvwxyz0123456789"
+    token = ""
+    0.upto(10) do |i|
+      token += possible[(rand * 36).to_i].chr
+    end
+    return token
+  end
+  
 end
