@@ -75,10 +75,18 @@ class SirsController < ApplicationController
     @signature = Signature.new(params[:signature])
     if @signature.save
       flash[:notice] = "Successfully signed SIR"
+      if @signature.role == Role.find_by_name("program_manager")
+        redirect_to sir_notifications_path(@signature.sir)
+        return
+      end
     else
       flash[:error] = @signature.errors.on_base.each{|attr, msg| "#{msg}<br />"}
     end
     redirect_to @signature.sir
+  end
+  
+  def notifications
+    @sir = Sir.find(params[:id])
   end
 
   # GET /sirs/new
