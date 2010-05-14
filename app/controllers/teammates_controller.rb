@@ -56,7 +56,7 @@ class TeammatesController < ApplicationController
     respond_to do |format|
       if @teammate.save
         flash[:notice] = 'Teammate was successfully created.'
-        format.html { redirect_to(@teammate) }
+        format.html { redirect_to new_teammate_path }
         format.xml  { render :xml => @teammate, :status => :created, :location => @teammate }
       else
         format.html { render :action => "new" }

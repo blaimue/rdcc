@@ -44,10 +44,7 @@ class CustomersController < ApplicationController
   def new
     @customer = Customer.new
 
-    respond_to do |format|
-      format.html # new.html.erb
-      format.xml  { render :xml => @customer }
-    end
+    render :edit
   end
 
   # GET /customers/1/edit
@@ -60,6 +57,9 @@ class CustomersController < ApplicationController
   def create
     params[:customer][:admitted_on] = Chronic.parse(params[:customer][:admitted_on])
     params[:customer][:released_on] = Chronic.parse(params[:customer][:released_on])
+    unless params[:customer][:program].nil?
+      params[:customer][:program] = Program.find(params[:customer][:program])
+    end
     @customer = Customer.new(params[:customer])
 
     respond_to do |format|
@@ -80,6 +80,9 @@ class CustomersController < ApplicationController
     params[:customer][:admitted_on] = Chronic.parse(params[:customer][:admitted_on])
     params[:customer][:released_on] = Chronic.parse(params[:customer][:released_on])
     @customer = Customer.find(params[:id])
+    unless params[:customer][:program].nil?
+      params[:customer][:program] = Program.find(params[:customer][:program])
+    end
 
     respond_to do |format|
       if @customer.update_attributes(params[:customer])
