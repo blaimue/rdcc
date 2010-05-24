@@ -2,7 +2,7 @@ class UsersController < ApplicationController
   layout 'rdcc'
   
   skip_before_filter :authenticate, :only => [:create, :new, :forgot_password, :reset_password]
-  before_filter :check_access, :except => [:create, :new, :index, :forgot_password, :reset_password]
+  before_filter :check_access, :except => [:create, :new, :forgot_password, :reset_password]
   
   def check_access
     unless has_access? Role.find_by_name("hr")
