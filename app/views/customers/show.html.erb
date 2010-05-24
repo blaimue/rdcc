@@ -1,10 +1,7 @@
 <h2>
-    Customer Information
-    <span>
-    <%= link_to 'Edit', edit_customer_path(@customer) %> |
-    <%= link_to 'Back', customers_path %>
-    </span>
+    Customer Information <span><%= link_to 'Edit', edit_customer_path(@customer) %></span>
 </h2>
+
 
 <p>
     <b>Name:</b>
@@ -13,7 +10,12 @@
 
 <p>
     <b>Program:</b>
-    <%=h @customer.program.name unless @customer.program.nil? %>
+    <%= link_to @customer.program.name, @customer.program unless @customer.program.nil? %>
+</p>
+
+<p>
+    <b>Teammates:</b>
+    <%= @customer.teammates.collect{|x| link_to x.full_name, x}.to_sentence %>
 </p>
 
 <p>

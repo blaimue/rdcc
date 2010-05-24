@@ -75,10 +75,18 @@ class SirsController < ApplicationController
     @signature = Signature.new(params[:signature])
     if @signature.save
       flash[:notice] = "Successfully signed SIR"
+      if @signature.role == Role.find_by_name("program_manager")
+        redirect_to sir_notifications_path(@signature.sir)
+        return
+      end
     else
       flash[:error] = @signature.errors.on_base.each{|attr, msg| "#{msg}<br />"}
     end
     redirect_to @signature.sir
+  end
+  
+  def notifications
+    @sir = Sir.find(params[:id])
   end
 
   # GET /sirs/new
@@ -103,69 +111,6 @@ class SirsController < ApplicationController
     @submit_button = "Update"
   end
   
-  def add_user
-    add_person("user")
-  end
-  
-  def add_customer
-    add_person("customer")
-  end
-  
-  def add_person(person_table)
-    @sir = Sir.find(params[:id])
-    if person_table == "customer"
-      person = Customer.find_by_full_name(params[:sir][:name])
-    elsif person_table == "user"
-      person = User.find_by_full_name(params[:sir][:name])
-    end
-    unless person.errors.on_base.nil?
-      flash.now[:error] = person.errors.on_base.each{|attr, msg| "#{msg}<br />"}
-    else
-      existing = false
-      for existingPerson in @sir.send("#{person_table}s")
-        if person.full_name == existingPerson.full_name
-          existing = true
-        end
-      end
-      if existing
-        flash.now[:error] = "#{params[:sir][:name]} is already associated with this SIR"
-      else
-        if person_table == "customer"
-          @sir.customers << person
-        elsif person_table == "user"
-          @sir.users << person
-        end
-      end
-    end
-      
-    render :partial => "editable_person_list", :object => @sir.send("#{person_table}s"), :locals => {:person_table => person_table}
-  end
-
-  def remove_customer
-    remove_person("customer")
-  end
-  
-  def remove_user
-    remove_person("user")
-  end
-  
-  def remove_person(person_table)
-    @sir = Sir.find(params[:id])
-    if person_table == "customer"
-      person = Customer.find(params[:person_id])
-    elsif person_table == "user"
-      person = User.find(params[:person_id])
-    end
-    
-    unless person.errors.on_base.nil?
-      flash.now[:error] = person.errors.on_base.each{|attr, msg| "#{msg}<br />"}
-    else
-      @sir.send("#{person_table}s").delete(person)
-    end
-      
-    render :partial => "editable_person_list", :object => @sir.send("#{person_table}s"), :locals => {:person_table => person_table}
-  end
-
   # POST /sirs
   # POST /sirs.xml
   def create
