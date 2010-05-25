@@ -1,0 +1,13 @@
+<h1>Teammates</h1>
+
+<p><%= link_to 'Click here to download a PDF of this SIR', sir_path(@sir, :format => 'pdf') %></p>
+
+<% for customer in @sir.customers %>
+    <p>
+        <label><%= customer.full_name %></label><br />
+        <% for teammate in customer.teammates %>
+            <%=h teammate.full_name %> - <%= mail_to teammate.email %><br />
+        <% end %>
+    </p>
+<% end %>
+

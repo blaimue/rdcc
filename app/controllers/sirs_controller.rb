@@ -78,6 +78,13 @@ class SirsController < ApplicationController
       if @signature.role == Role.find_by_name("program_manager")
         redirect_to sir_notifications_path(@signature.sir)
         return
+      else
+        program_managers = Role.find_by_name("program_manager")
+        unless program_managers.nil?
+          for recipient in program_managers.users
+            SirMailer.deliver_new(@signature.sir, recipient.email)
+          end
+        end
       end
     else
       flash[:error] = @signature.errors.on_base.each{|attr, msg| "#{msg}<br />"}

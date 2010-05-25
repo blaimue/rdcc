@@ -1,0 +1,19 @@
+New SIR needs your attention.
+
+Program: <%= @sir.program.name unless @sir.program.nil? %>
+
+Date/time: <%=h @sir.incident_datetime %>
+Customers: <%= @sir.customers.collect{|x| x.full_name}.to_sentence %>
+Staff: <%= @sir.users.collect{|x| x.full_name}.to_sentence %>
+
+Incidents: <%=h @sir.incidenttypes.collect{|x| x.name}.to_sentence %>
+Interventions: <%=h @sir.interventions.collect{|x| x.name}.to_sentence %>
+
+Antecedent: <%=h @sir.antecedent %>
+
+Description: <%=h @sir.description %>
+
+
+To view this SIR, go to http://streamline.ruthdykeman.org:3000/sirs/<%= @sir.id %>
+
+
