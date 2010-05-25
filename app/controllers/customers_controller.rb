@@ -111,7 +111,7 @@ class CustomersController < ApplicationController
 private
 
   def check_access
-    unless has_access? Role.find_by_name("hr")
+    unless has_access? Role.find_by_name("hr") or has_access? Role.find_by_name("program_manager")
       flash[:error] = "Access denied"
       redirect_to :controller => :dashboard
     end
