@@ -3,8 +3,8 @@ require 'chronic'
 class CustomersController < ApplicationController
   layout 'rdcc'
   
-  before_filter :check_access, :except => [:index]
-    
+  before_filter :check_access
+  
   # GET /customers
   # GET /customers.xml
   def index
