@@ -1,6 +1,8 @@
 class ProgramsController < ApplicationController
   layout 'rdcc'
   
+  before_filter :check_access
+  
   # GET /programs
   # GET /programs.xml
   def index
@@ -89,6 +91,15 @@ class ProgramsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to(programs_url) }
       format.xml  { head :ok }
+    end
+  end
+  
+private
+
+  def check_access
+    unless has_access? Role.find_by_name("hr")
+      flash[:error] = "Access denied"
+      redirect_to :controller => :dashboard
     end
   end
 end
