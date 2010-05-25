@@ -39,7 +39,7 @@
 
 <p>
 	<b>Staff:</b>
-	<%= @sir.users.collect{|x| link_to x.full_name, x}.to_sentence %>
+	<%= @sir.users.collect{|x| x.full_name}.to_sentence %>
 </p>
 
 <p>
