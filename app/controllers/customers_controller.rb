@@ -32,7 +32,7 @@ class CustomersController < ApplicationController
       format.xml  { render :xml => @customer }
       format.pdf {
         filename = ""
-        if @customers
+        if @customer
           filename += (@customer.first_name[0].chr + @customer.last_name)
         end
         prawnto :filename => "sirs_#{filename}.pdf".downcase
