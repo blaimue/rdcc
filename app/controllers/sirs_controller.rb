@@ -114,7 +114,8 @@ class SirsController < ApplicationController
       redirect_to @sir
     end
     
-    @header = "Editing SIR"
+    id = sprintf("%04d", @sir.id)
+    @header = "Editing SIR ##{id}"
     @submit_button = "Update"
   end
   

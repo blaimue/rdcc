@@ -18,6 +18,11 @@
 <% end %>
 
 <p>
+	<b>ID:</b>
+	<%=h sprintf("%04d", @sir.id) %>
+</p>
+
+<p>
 	<b>Program:</b>
 	<%=h @sir.program.name unless @sir.nil? or @sir.program.nil? %>
 </p>
