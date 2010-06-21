@@ -43,13 +43,13 @@ module ApplicationHelper
 
     pdf.text "Lsi resolution: #{ sir.lsi_resolution }" unless sir.lsi_resolution.nil? or sir.lsi_resolution.empty?
 
-    pdf.text "Der time in: #{ sir.der_time_in }" unless sir.der_time_in.nil? or sir.der_time_in.empty?
+    pdf.text "Der time in: #{ sir.der_time_in }" unless sir.der_time_in.nil?
 
-    pdf.text "Der time door: #{ sir.der_time_door }" unless sir.der_time_door.nil? or sir.der_time_door.empty?
+    pdf.text "Der time door: #{ sir.der_time_door }" unless sir.der_time_door.nil?
 
-    pdf.text "Der time out: #{ sir.der_time_out }" unless sir.der_time_out.nil? or sir.der_time_out.empty?
+    pdf.text "Der time out: #{ sir.der_time_out }" unless sir.der_time_out.nil?
 
-    pdf.text "Observation report completed: #{ sir.observation_report_completed }" unless sir.der_time_in.nil? or sir.der_time_in.empty?
+    pdf.text "Observation report completed: #{ sir.observation_report_completed }" unless sir.observation_report_completed.nil?
 
     pdf.text "Injury description: #{ sir.injury_description }" unless sir.injury_description.nil? or sir.injury_description.empty?
 
