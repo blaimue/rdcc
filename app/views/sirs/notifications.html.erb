@@ -1,13 +1,22 @@
-<h1>Teammates</h1>
+<h1>Notifications for SIR <%= sprintf("%04d", @sir.id) %></h1>
 
 <p><%= link_to 'Click here to download a PDF of this SIR', sir_path(@sir, :format => 'pdf') %></p>
+
+<p>
+<b>Notifications sent to:</b><br />
+<% if @sir.notifications.nil? or @sir.notifications.empty? %><i>No notifications sent</i><% end %>
+<% for notification in @sir.notifications %>
+    <%= notification.teammate.full_name %> at <%= notification.created_at %><br />
+<% end %>
+</p>
+
+<p STYLE="color:red">CLICK A NAME BELOW TO INDICATE YOU SENT A NOTIFICATION</p>
 
 <% for customer in @sir.customers %>
     <p>
         <label><%= customer.full_name %></label><br />
         <% for teammate in customer.teammates %>
-            <%=h teammate.full_name %> - <%= mail_to teammate.email %><br />
+            <%= link_to teammate.full_name, sir_notified_path(:teammate_id => teammate.id, :id => @sir.id) %> - <%= teammate.email %><br />
         <% end %>
     </p>
 <% end %>
-

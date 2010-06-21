@@ -10,6 +10,7 @@ ActionController::Routing::Routes.draw do |map|
   
   map.followup '/sirs/:id/followup', :controller => 'sirs', :action => 'followup'
   map.sir_notifications '/sirs/:id/notifications', :controller => 'sirs', :action => 'notifications'
+  map.sir_notified '/sirs/:id/notified/:teammate_id', :controller => 'sirs', :action => 'notified'
   map.discontinue_message '/messages/:id/discontinue', :controller => 'messages', :action => 'discontinue'
   map.bugs 'feedback', :controller => 'feedbacks', :action => 'new'
   

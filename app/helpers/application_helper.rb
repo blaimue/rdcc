@@ -18,6 +18,9 @@ module ApplicationHelper
   end
 
   def write_sir(pdf, sir)
+    id = sprintf("%04d", sir.id)
+    pdf.text "ID: #{ id }"
+    
     pdf.text "Program: #{ sir.program.name }" unless sir.program.nil? or sir.program.name.nil? or sir.program.name.empty?
 
     pdf.text "Location: #{ sir.location.name }" unless sir.location.nil? or sir.location.name.nil? or sir.location.name.empty?

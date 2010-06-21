@@ -95,6 +95,13 @@ class SirsController < ApplicationController
   def notifications
     @sir = Sir.find(params[:id])
   end
+  
+  def notified
+    sir = Sir.find(params[:id])
+    teammate = Teammate.find(params[:teammate_id])
+    sir.notifications.create({:teammate_id => teammate.id, :user_id => session[:user_id], :notified_by => session[:user_id], :sir_id => sir.id})
+    redirect_to sir_notifications_path(sir)
+  end
 
   # GET /sirs/new
   # GET /sirs/new.xml

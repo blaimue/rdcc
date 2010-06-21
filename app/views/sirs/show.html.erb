@@ -153,6 +153,15 @@
 </p>
 
 <p>
+<b>Notifications sent to:</b><br />
+<% if @sir.notifications.nil? or @sir.notifications.empty? %><i>No notifications sent</i><% end %>
+<% for notification in @sir.notifications %>
+    <%= notification.teammate.full_name %> at <%= notification.created_at %><br />
+<% end %>
+<%= link_to "Record more notifications", sir_notifications_path(@sir) %>
+</p>
+
+<p>
 	<b>Signatures</b><br />
 	<% for signature in @sir.signatures %>
 	<%= signature.role == Role.find_by_name("program_manager") ? "Locked" : "Signed" %> by <%= signature.user.short_name %> on <%= signature.created_at %><br />

@@ -3,6 +3,7 @@
 <% form_for(@teammate) do |f| %>
   <%= f.error_messages %>
 
+  <div style="float:left">
   <p>
     <%= f.label :first_name %><br />
     <%= f.text_field :first_name %>
@@ -22,6 +23,22 @@
   <p>
     <%= button 'teammate', 'Update' %>
   </p>
+  </div>
+  <div style="margin-left:300px;">
+      <p>
+          <%= label_tag :customers %><br />
+          <div style="overflow-x:hidden;overflow-y:auto;height:300px;width:300px;">
+              <% for customer in Customer.all.sort{|a, b| a.last_name+a.first_name <=> b.last_name+b.first_name} %>
+          		<input type="checkbox"
+          		    id="<%= "teammate_customer_ids_#{customer.id}" %>"
+          		    name="teammate[customer_ids][]"
+          		    value="<%= customer.id%>" <%= @teammate.customers.include?(customer) ? '"checked=true"' : "" %>>
+          		<label for="teammate_customer_ids_<%= customer.id%>" style="font-weight:normal;"><%= customer.full_name %></label>
+          		<br />
+              <% end %>
+          </div>
+      </p>
+  </div>
 <% end %>
 
 <%= link_to 'Show', @teammate %>
