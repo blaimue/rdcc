@@ -6,7 +6,7 @@
 <b>Notifications sent to:</b><br />
 <% if @sir.notifications.nil? or @sir.notifications.empty? %><i>No notifications sent</i><% end %>
 <% for notification in @sir.notifications %>
-    <%= notification.teammate.full_name %> at <%= notification.created_at %><br />
+    <%= notification.teammate.full_name %> at <%= notification.created_at %> by <%= notification.user.full_name %><br />
 <% end %>
 </p>
 
