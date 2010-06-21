@@ -63,7 +63,6 @@ class User < ActiveRecord::Base
   end
 
   def self.authenticate(email, password)
-    logger.info(email + " " + password)
     user = User.find(:first, :conditions => ["email = ?", email])
     logger.info("user: #{user.inspect.to_s}")
     if user.nil? then return nil end
