@@ -49,7 +49,7 @@ module ApplicationHelper
 
     pdf.text "Der time out: #{ sir.der_time_out }" unless sir.der_time_out.nil?
 
-    pdf.text "Observation report completed: #{ sir.observation_report_completed }" unless sir.observation_report_completed.nil?
+    pdf.text "Observation report completed: #{ sir.observation_report_completed }" unless sir.der_time_in.nil?
 
     pdf.text "Injury description: #{ sir.injury_description }" unless sir.injury_description.nil? or sir.injury_description.empty?
 
