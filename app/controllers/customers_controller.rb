@@ -9,11 +9,11 @@ class CustomersController < ApplicationController
   # GET /customers
   # GET /customers.xml
   def index
-    find_options = {:order => "last_name asc, first_name asc"}
-    @customers = Customer.all(find_options)
 
-    unless (params[:show] == "all")
-      @customers.reject!{|x| !x.released_on.nil? and x.released_on < Date.today}
+    if (params[:show] == "all")
+      @customers = Customer.all
+    else
+      @customers = Customer.find_active
     end
 
     respond_to do |format|

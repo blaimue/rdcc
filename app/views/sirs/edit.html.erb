@@ -17,7 +17,7 @@
 	    <label>Customers <span style="position:relative;left:250px;">Staff involved</span> </label>
 	    <table><tr><td>
 	        <div style="overflow-x:hidden;overflow-y:auto;width:300px;max-height:200px;">
-        <% for customer in Customer.find(:all, :order => 'first_name asc, last_name asc') %>
+        <% for customer in Customer.find_active %>
     		<input type="checkbox"
     		    id="<%= "sir_customer_ids_#{customer.id}" %>"
     		    name="sir[customer_ids][]"
@@ -29,7 +29,7 @@
 	    </div>
 	</td><td>
         <div style="overflow:hidden;overflow-y:auto;width:300px;max-height:200px;">
-		<% for user in User.find(:all, :order => 'first_name asc, last_name asc') %>
+		<% for user in User.find_active %>
 			<input type="checkbox"
 			    id="<%= "sir_user_ids_#{user.id}" %>"
 			    name="sir[user_ids][]"

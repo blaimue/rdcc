@@ -2,7 +2,7 @@
 
 <table>
   <tr>
-    <th>Name (Last, First)</th>
+    <th>Name</th>
     <th>Job title</th>
 	<th>Roles</th>
     <th>Status</th>
@@ -12,7 +12,7 @@
 
 <% @users.each do |user| %>
   <tr>
-    <td><%=h user.last_name %>, <%=h user.first_name %></td>
+    <td><%=h user.full_name %></td>
     <td><%=h user.job_title %></td>
     <td><%=h user.role_names %></td>
     <td><%=h user.status_name %></td>

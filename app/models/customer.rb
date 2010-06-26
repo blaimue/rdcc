@@ -14,6 +14,16 @@ class Customer < ActiveRecord::Base
     "#{first_name} #{last_name}" 
   end
   
+  def self.find_active
+    customers = Customer.find(:all, :order => "first_name asc, last_name asc")
+    customers.reject!{|c| !c.released_on.nil? && c.released_on < Date.today}
+    return customers
+  end
+  
+  def self.all
+    Customer.find(:all, :order => "first_name asc, last_name asc")
+  end
+  
   def self.find_by_full_name(full_name)
     if full_name.nil? or full_name.empty?
       customer = Customer.new

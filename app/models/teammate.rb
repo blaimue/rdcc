@@ -13,5 +13,8 @@ class Teammate < ActiveRecord::Base
     "#{first_name} #{last_name}"
   end
 
+  def self.all
+    Teammate.find(:all, :order => "first_name asc, last_name asc")
+  end
   
 end

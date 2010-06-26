@@ -54,6 +54,14 @@ class User < ActiveRecord::Base
     ["Full Time", "Part Time", "Inactive"]
   end
 
+  def self.find_active
+    User.find(:all, :order => 'first_name asc, last_name asc', :conditions => ["status != ?", User.STATUS[:inactive]])
+  end
+  
+  def self.all
+    User.find(:all, :order => 'first_name asc, last_name asc')
+  end
+
   def short_name
     "#{first_name} #{last_name[0].chr}"
   end

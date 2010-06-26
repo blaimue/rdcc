@@ -28,7 +28,7 @@
       <p>
           <%= label_tag :customers %><br />
           <div style="overflow-x:hidden;overflow-y:auto;height:300px;width:300px;">
-              <% for customer in Customer.all.sort{|a, b| a.last_name+a.first_name <=> b.last_name+b.first_name} %>
+              <% for customer in Customer.find_active %>
           		<input type="checkbox"
           		    id="<%= "teammate_customer_ids_#{customer.id}" %>"
           		    name="teammate[customer_ids][]"

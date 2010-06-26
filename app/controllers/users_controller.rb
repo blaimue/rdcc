@@ -14,11 +14,11 @@ class UsersController < ApplicationController
   # GET /users
   # GET /users.xml
   def index
-    find_options = {:order => "last_name asc, first_name asc"}
-    unless (params[:show] == "all")
-      find_options[:conditions] = ["status != ?", User.STATUS[:inactive]]
+    if (params[:show] == "all")
+      @users = User.all
+    else
+      @users = User.find_active
     end
-    @users = User.all(find_options)
 
     respond_to do |format|
       format.html # index.html.erb

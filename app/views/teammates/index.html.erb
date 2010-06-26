@@ -2,16 +2,14 @@
 
 <table>
   <tr>
-    <th>First name</th>
-    <th>Last name</th>
+    <th>Name</th>
     <th>Job title</th>
     <th>Email</th>
   </tr>
 
 <% @teammates.each do |teammate| %>
   <tr>
-    <td><%=h teammate.first_name %></td>
-    <td><%=h teammate.last_name %></td>
+    <td><%=h teammate.full_name %></td>
     <td><%=h teammate.job_title %></td>
     <td><%=h teammate.email %></td>
     <td><%= link_to 'Show', teammate %></td>

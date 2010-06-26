@@ -2,14 +2,14 @@
 
 <table>
   <tr>
-    <th>Name (last, first)</th>
+    <th>Name</th>
     <th>Admitted on</th>
     <th>Released on</th>
   </tr>
 
 <% @customers.each do |customer| %>
   <tr>
-    <td><%=h customer.last_name %>, <%=h customer.first_name %></td>
+    <td><%=h customer.full_name %></td>
     <td><%=h customer.admitted_on %></td>
     <td><%=h customer.released_on %></td>
     <td><%= link_to 'Show', customer %></td>
