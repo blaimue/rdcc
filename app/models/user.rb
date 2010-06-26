@@ -82,22 +82,6 @@ class User < ActiveRecord::Base
     return user
   end
 
-  def self.find_by_full_name(full_name)
-    if full_name.nil? or full_name.empty?
-      user = User.new
-      user.errors.add_to_base("Please enter a staff member name")
-    else
-      user = User.find_by_sql ["select *, first_name || ' ' || last_name as full_name from users where full_name = ?", full_name];
-      if user.nil? or user.empty? or user.length != 1
-        user = User.new
-        user.errors.add_to_base("Couldn't find a staff member named #{full_name}")
-      else
-        user = user[0]
-      end
-    end
-    return user
-  end
-
 private
   def self.sha1(salt, pass)
       Digest::SHA1.hexdigest("---#{salt}--#{pass}--")
