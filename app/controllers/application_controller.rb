@@ -29,8 +29,11 @@ class ApplicationController < ActionController::Base
       redirect_to :controller => :sessions, :action => :new
     else
       user = User.find(session[:user_id])
-      if user.nil? or user.status == User.STATUS[:inactive]
+      if user.nil?
         flash[:error] = "Please log in"
+        redirect_to :controller => :sessions, :action => :new
+      elsif user.status == User.STATUS[:inactive]
+        flash[:error] = "Your account has been deactivated, please contact HR to be reinstated"
         redirect_to :controller => :sessions, :action => :new
       end
     end
