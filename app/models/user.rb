@@ -23,7 +23,6 @@ class User < ActiveRecord::Base
   has_many :notifications_sent, :class_name => "Notification", :foreign_key => :notified_by
   has_many :notifications_received, :class_name => "Notification", :foreign_key => :user_id
   has_and_belongs_to_many :sirs
-  has_and_belongs_to_many :roles
   belongs_to :program
 
   validates_format_of :email, :with => EMAIL_REGEX
@@ -47,7 +46,23 @@ class User < ActiveRecord::Base
   end
   
   def role_names
-    roles.collect{|x| x.display}.to_sentence
+    roles = []
+    if program_role == STAFF
+      roles.push("Program staff")
+    elsif program_role == MANAGER
+      roles.push("Program manager")
+    end
+    if hr_role == STAFF
+      roles.push("HR staff")
+    elsif hr_role == MANAGER
+      roles.push("HR manager")
+    end
+    if workorder_role == STAFF
+      roles.push("Maintenance staff")
+    elsif workorder_role == MANAGER
+      roles.push("Maintenance manager")
+    end
+    return roles.to_sentence
   end
   
   def self.status_names
@@ -56,6 +71,19 @@ class User < ActiveRecord::Base
 
   def self.find_active
     User.find(:all, :order => 'first_name asc, last_name asc', :conditions => ["status != ?", User.STATUS[:inactive]])
+  end
+  
+  def self.find_active_program
+    User.find(:all, :order => 'first_name asc, last_name asc', :conditions => ["status != ? and program_role >= ?", User.STATUS[:inactive], STAFF])
+  end
+  
+  def self.find_by_role(role, level)
+    role_names = {
+      HR => "hr_role",
+      PROGRAM => "program_role",
+      WORKORDER => "workorder_role"
+    }
+    User.find(:all, :conditions => ["? >= ?", role_names[role], level])
   end
   
   def self.all

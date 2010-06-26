@@ -2,7 +2,7 @@ To sign this SIR, type your full name as it appears in your HR record (<%= User.
 <% form_for @signature, :url => {:action => :sign_sir} do |f| %>
 	<%= f.hidden_field :sir_id %>
 	<%= f.hidden_field :user_id %>
-	<%= f.hidden_field :role_id, :value => @role_id %>
+	<%= f.hidden_field :program_role %>
 	<%= f.text_field :username %>
 	<button type="submit" value="Sign SIR" name="commit" id="signature_submit">Sign SIR</button>
 <% end %>

@@ -1,7 +1,6 @@
 class Signature < ActiveRecord::Base
   belongs_to :sir
   belongs_to :user
-  belongs_to :role
   
   validate :signed_own_name
   

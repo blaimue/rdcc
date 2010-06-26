@@ -3,18 +3,13 @@ require 'chronic'
 class SirsController < ApplicationController
   layout 'rdcc'
   
-  before_filter :check_access
-  
-  auto_complete_for :sir, :customer_name
-  auto_complete_for :sir, :user_name
-  auto_complete_for :sir, :user_name2
-  auto_complete_for :sir, :teammate_name
+  parameterized_before_filter :check_access, [[PROGRAM, STAFF]]
   
   # GET /sirs
   # GET /sirs.xml
   def index
     @sirs = Sir.all
-    @has_edit_access = has_access? Role.find_by_name("program_manager")
+    @has_edit_access = has_access? PROGRAM, MANAGER
 
     respond_to do |format|
       format.html # index.html.erb
@@ -26,7 +21,7 @@ class SirsController < ApplicationController
   # GET /sirs/1.xml
   def show
     @sir = Sir.find(params[:id])
-    @has_edit_access = has_access? Role.find_by_name("program_manager")
+    @has_edit_access = has_access? PROGRAM, MANAGER
 
     respond_to do |format|
       format.html # show.html.erb
@@ -55,18 +50,8 @@ class SirsController < ApplicationController
     @signature = Signature.new
     @signature.sir = @sir
     @signature.user_id = session[:user_id]
-    
-    low_role = Role.find_by_name("program_staff")
-    high_role = Role.find_by_name("program_manager")
     user = User.find(session[:user_id])
-    for role in user.roles
-      if role == high_role
-        @role_id = high_role.id
-        break
-      elsif role == low_role
-        @role_id = low_role.id  # keep going in case we find a better role
-      end
-    end
+    @signature.program_role = user.program_role
     
     render :partial => "sign_sir_form"
   end
@@ -75,11 +60,11 @@ class SirsController < ApplicationController
     @signature = Signature.new(params[:signature])
     if @signature.save
       flash[:notice] = "Successfully signed SIR"
-      if @signature.role == Role.find_by_name("program_manager")
+      if @signature.program_role == MANAGER
         redirect_to sir_notifications_path(@signature.sir)
         return
       else
-        program_managers = Role.find_by_name("program_manager")
+        program_managers = User.find_by_role(PROGRAM, MANAGER)
         unless program_managers.nil?
           for recipient in program_managers.users
             SirMailer.deliver_new(@signature.sir, recipient.email)
@@ -116,7 +101,7 @@ class SirsController < ApplicationController
   # GET /sirs/1/edit
   def edit
     @sir = Sir.find(params[:id])
-    if @sir.locked or (@sir.signed and !has_access? Role.find_by_name("program_manager"))
+    if @sir.locked or (@sir.signed and !has_access? PROGRAM, MANAGER)
       flash[:error] = "Can't edit SIR after it's signed and locked."
       redirect_to @sir
     end
@@ -181,13 +166,6 @@ class SirsController < ApplicationController
   end
   
 private
-  
-  def check_access
-    unless has_access? Role.find_by_name("program_staff")
-      flash[:error] = "Access denied"
-      redirect_to :controller => :dashboard
-    end
-  end
   
   def parse_date_fields
     unless params[:sir].nil?

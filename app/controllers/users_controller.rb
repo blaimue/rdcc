@@ -2,14 +2,8 @@ class UsersController < ApplicationController
   layout 'rdcc'
   
   skip_before_filter :authenticate, :only => [:create, :new, :forgot_password, :reset_password]
-  before_filter :check_access, :except => [:create, :new, :forgot_password, :reset_password]
   
-  def check_access
-    unless has_access? Role.find_by_name("hr")
-      flash[:error] = "Access denied"
-      redirect_to :controller => :dashboard
-    end
-  end
+  parameterized_before_filter :check_access, [[HR, STAFF]]
   
   # GET /users
   # GET /users.xml
@@ -62,7 +56,7 @@ class UsersController < ApplicationController
     respond_to do |format|
       if @user.save
         flash[:notice] = 'Your account was successfully created.'
-        hr_managers = Role.find_by_name("hr_manager")
+        hr_managers = User.find_by_role(HR, MANAGER)
         unless hr_managers.nil?
           for recipient in hr_managers.users
             UserMailer.deliver_new(recipient.email, @user)

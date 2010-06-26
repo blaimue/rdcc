@@ -28,13 +28,46 @@
     <%= f.radio_button :status, User.STATUS[:inactive] %>
         <%= f.label :status, User.status_names()[User.STATUS[:inactive]], :value => User.STATUS[:inactive] %><br />
   </p>
-  <p>
-    <%= f.label :roles %><br />
-	<% for role in Role.all %>
-	    <input type="checkbox" id="<%= "user_role_ids_#{role.id}" %>" name="user[role_ids][]" value="<%= role.id%>" <%= @user.roles.include?(role) ? '"checked=true"' : "" %>>
-            <label for="user_role_ids_<%= role.id%>"><%= role.display %></label><br />
-	<% end %>
-  </p>
+
+<table>
+    <tr>
+        <th></th>
+        <th>None</th>
+        <th>Staff</th>
+        <th>Manager</th>
+    </tr>
+    <tr>
+        <td>Program</td>
+        <td>
+            <%= f.radio_button :program_role, NONE %>
+        </td><td>
+            <%= f.radio_button :program_role, STAFF %>
+        </td><td>
+            <%= f.radio_button :program_role, MANAGER %>
+        </td>
+    </tr>
+    <tr>
+        <td>HR</td>
+        <td>
+            <%= f.radio_button :hr_role, NONE %>
+        </td><td>
+            <%= f.radio_button :hr_role, STAFF %>
+        </td><td>
+            <%= f.radio_button :hr_role, MANAGER %>
+        </td>
+    </tr>
+    <tr>
+        <td>Maintenance</td>
+        <td>
+            <%= f.radio_button :workorder_role, NONE %>
+        </td><td>
+            <%= f.radio_button :workorder_role, STAFF %>
+        </td><td>
+            <%= f.radio_button :workorder_role, MANAGER %>
+        </td>
+    </tr>
+</table>
+
   <p>
     <%= f.label :emergency_contact_name %><br />
     <%= f.text_field :emergency_contact_name %>

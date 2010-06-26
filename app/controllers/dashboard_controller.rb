@@ -2,19 +2,19 @@ class DashboardController < ApplicationController
   layout 'rdcc'
   
   def index
-    if has_access? Role.find_by_name("workorder_manager")
+    if has_access? WORKORDER, MANAGER
       render :action => :workorder_manager
-    elsif has_access? Role.find_by_name("workorder_staff")
+    elsif has_access? WORKORDER, STAFF
       render :action => :workorder_staff
-    elsif has_access? Role.find_by_name("program_manager")
+    elsif has_access? PROGRAM, MANAGER
       @has_edit_access = true
       program_staff # managers see everything staff see, with extra
       program_manager
       render :action => :program_manager
-    elsif has_access? Role.find_by_name("program_staff")
+    elsif has_access? PROGRAM, STAFF
       program_staff
       render :action => :program_staff
-    elsif has_access? Role.find_by_name("hr")
+    elsif has_access? HR, STAFF
       redirect_to :action => :hr
     end
   end

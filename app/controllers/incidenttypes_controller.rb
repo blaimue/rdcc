@@ -1,6 +1,9 @@
 class IncidenttypesController < ApplicationController
   layout 'rdcc'
   
+  parameterized_before_filter :check_access, [[PROGRAM, STAFF], [HR, STAFF]]
+  parameterized_before_filter :check_access, [[PROGRAM, MANAGER], [HR, STAFF]], :except => [:index, :show]
+  
   # GET /incidenttypes
   # GET /incidenttypes.xml
   def index

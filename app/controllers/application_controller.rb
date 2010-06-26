@@ -19,6 +19,12 @@ class ApplicationController < ActionController::Base
   # Scrub sensitive parameters from your log
   filter_parameter_logging :password, :password_confirmation
 
+  def self.parameterized_before_filter(filter_name, *args)
+      options = args.extract_options!
+
+      self.before_filter(options) { |controller| controller.send(filter_name, *args) }
+    end
+    
   def find_messages
     @motds = Message.find(:all, :conditions => ["expiration > ?", Time.now.utc], :order => 'id desc')
   end
@@ -39,16 +45,25 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def has_access?(required_role)
-    user = User.find(session[:user_id])
-    if user.nil? or user.status == User.STATUS[:inactive]
-      return false
-    end
-    for role in user.roles
-      logger.info("user role " + user.roles.inspect.to_s)
-      if role == required_role
-        return true
+  def check_access(pairs)
+    for pair in pairs
+      if has_access? pair[0], pair[1]
+        return
       end
+    end
+    flash[:error] = "Access denied"
+    redirect_to :controller => :dashboard
+  end
+
+  def has_access?(role, level)
+    user = User.find(session[:user_id])
+    case role
+      when HR:
+        return user.hr_role >= level
+      when PROGRAM:
+        return user.program_role >= level
+      when WORKORDER:
+        return user.workorder_role >= level
     end
     return false
   end

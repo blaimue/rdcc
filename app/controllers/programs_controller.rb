@@ -1,7 +1,8 @@
 class ProgramsController < ApplicationController
   layout 'rdcc'
   
-  before_filter :check_access
+  parameterized_before_filter :check_access, [[PROGRAM, STAFF], [HR, STAFF]]
+  parameterized_before_filter :check_access, [[PROGRAM, MANAGER], [HR, STAFF]], :except => [:index, :show]
   
   # GET /programs
   # GET /programs.xml
@@ -94,12 +95,4 @@ class ProgramsController < ApplicationController
     end
   end
   
-private
-
-  def check_access
-    unless has_access? Role.find_by_name("hr")
-      flash[:error] = "Access denied"
-      redirect_to :controller => :dashboard
-    end
-  end
 end

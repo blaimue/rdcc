@@ -1,14 +1,8 @@
 class TeammatesController < ApplicationController
   layout 'rdcc'
   
-  before_filter :check_access
-    
-  def check_access
-    unless has_access? Role.find_by_name("hr")
-      flash[:error] = "Access denied"
-      redirect_to :controller => :dashboard
-    end
-  end
+  parameterized_before_filter :check_access, [[PROGRAM, STAFF], [HR, STAFF]]
+  parameterized_before_filter :check_access, [[PROGRAM, MANAGER], [HR, STAFF]], :except => [:index, :show]
   
   # GET /teammates
   # GET /teammates.xml

@@ -1,8 +1,6 @@
 class MessagesController < ApplicationController
   layout 'rdcc'
   
-  before_filter :check_access
-  
   # GET /messages
   # GET /messages.xml
   def index
@@ -92,13 +90,4 @@ class MessagesController < ApplicationController
     end
   end
   
-private
-
-  def check_access
-    unless has_access? Role.find_by_name("hr")
-      flash[:error] = "Access denied"
-      redirect_to :controller => :dashboard
-    end
-  end
-
 end

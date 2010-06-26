@@ -49,9 +49,8 @@ class Sir < ActiveRecord::Base
   end
 
   def locker
-    required_role = Role.find_by_name("program_manager")
     for signature in signatures
-      if signature.role == required_role
+      if signature.program_role >= MANAGER
         return signature.user
       end
     end

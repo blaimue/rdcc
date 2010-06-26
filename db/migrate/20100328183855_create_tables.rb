@@ -114,7 +114,7 @@ class CreateTables < ActiveRecord::Migration
       t.integer :sir_id
       t.integer :user_id
       t.string :username
-      t.integer :role_id
+      t.integer :program_role
       t.timestamps
     end
     

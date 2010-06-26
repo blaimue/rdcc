@@ -3,8 +3,8 @@ require 'chronic'
 class CustomersController < ApplicationController
   layout 'rdcc'
   
-  before_filter :check_access
-  before_filter :check_edit_access, :except => [:index, :show]
+  parameterized_before_filter :check_access, [[PROGRAM, STAFF], [HR, STAFF]]
+  parameterized_before_filter :check_access, [[PROGRAM, MANAGER], [HR, STAFF]], :except => [:index, :show]
   
   # GET /customers
   # GET /customers.xml
@@ -109,20 +109,4 @@ class CustomersController < ApplicationController
     end
   end
   
-private
-
-def check_access
-  unless has_access? Role.find_by_name("hr") or has_access? Role.find_by_name("program_staff")
-    flash[:error] = "Access denied"
-    redirect_to :controller => :dashboard
-  end
-end
-
-def check_edit_access
-  unless has_access? Role.find_by_name("hr") or has_access? Role.find_by_name("program_manager")
-    flash[:error] = "Access denied"
-    redirect_to :controller => :dashboard
-  end
-end
-
 end

@@ -14,8 +14,12 @@
 		<%= f.collection_select :location_id, Location.all, :id, :name %>
 	</p>
 	<p>
-	    <label>Customers <span style="position:relative;left:250px;">Staff involved</span> </label>
-	    <table><tr><td>
+	    <table>
+	        <tr>
+ 	           <th><label>Customers</label></th>
+	           <th><label>Staff involved</label></th>
+	        </tr>
+	        <tr><td>
 	        <div style="overflow-x:hidden;overflow-y:auto;width:300px;max-height:200px;">
         <% for customer in Customer.find_active %>
     		<input type="checkbox"
@@ -29,7 +33,7 @@
 	    </div>
 	</td><td>
         <div style="overflow:hidden;overflow-y:auto;width:300px;max-height:200px;">
-		<% for user in User.find_active %>
+		<% for user in User.find_active_program %>
 			<input type="checkbox"
 			    id="<%= "sir_user_ids_#{user.id}" %>"
 			    name="sir[user_ids][]"

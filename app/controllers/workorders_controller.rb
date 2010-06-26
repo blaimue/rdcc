@@ -1,15 +1,6 @@
 class WorkordersController < ApplicationController
   layout 'rdcc'
   
-  before_filter :check_access
-    
-  def check_access
-    unless has_access? Role.find_by_name("workorder_staff")
-      flash[:error] = "Access denied"
-      redirect_to :controller => :dashboard
-    end
-  end
-  
   # GET /workorders
   # GET /workorders.xml
   def index
