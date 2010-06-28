@@ -32,6 +32,15 @@ class Sir < ActiveRecord::Base
     sir_title
   end
   
+  def self.page(page_number)
+    if page_number.class.to_s == "String"
+      return Sir.all(:order => 'incident_datetime desc')
+    end
+    page_number = [page_number, 0].max
+    page_number = [page_number, Sir.count/PAGE_SIZE].min
+    Sir.all(:offset => PAGE_SIZE*page_number, :limit => PAGE_SIZE, :order => 'incident_datetime desc')
+  end
+  
   def customers_to_string
     customers.collect{|x| x.short_name}.to_sentence
   end

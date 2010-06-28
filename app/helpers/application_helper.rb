@@ -17,6 +17,17 @@ module ApplicationHelper
     '<button type="submit" value="Update" name="commit" id="' + object_type + '_submit">' + name + '</button>'
   end
 
+  def paginate(page_number, page_count, total_count, path)
+    prev_page = page_number-1
+    next_page = page_number + 1
+    
+    prev_link = link_to_unless(prev_page < 0, h("<<"), send(path, :page_number => prev_page))
+    status = "&nbsp;Showing #{page_number*PAGE_SIZE+1} - #{[page_number*PAGE_SIZE+page_count, total_count].min} of #{total_count}&nbsp;"
+    next_link = link_to_unless (next_page*PAGE_SIZE>total_count, h(">>"), send(path, :page_number => next_page))
+    
+    return prev_link + status + next_link + "&nbsp;&nbsp;&nbsp;" + link_to("Show all", send(path, :page_number => 'all'))
+  end
+
   def write_sir(pdf, sir)
     id = sprintf("%04d", sir.id)
     pdf.text "ID: #{ id }"

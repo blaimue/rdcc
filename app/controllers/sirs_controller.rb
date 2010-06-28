@@ -8,8 +8,14 @@ class SirsController < ApplicationController
   # GET /sirs
   # GET /sirs.xml
   def index
-    @sirs = Sir.all
     @has_edit_access = has_access? PROGRAM, MANAGER
+    @total_count = Sir.count
+    page_number = params[:page_number].to_i
+    @page_number = page_number
+    if page_number == 0 and params[:page_number] == 'all'
+      page_number = 'all'
+    end
+    @sirs = Sir.page(page_number)
 
     respond_to do |format|
       format.html # index.html.erb

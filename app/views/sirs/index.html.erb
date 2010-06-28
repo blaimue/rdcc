@@ -2,6 +2,8 @@
 
 <%= render :partial => 'sir_list', :object => @sirs, :locals => {:empty_list_message => "No SIRs reported"} %>
 
+<p><span><%= paginate @page_number, @sirs.length, Sir.count, "sirs_path" %></span></p>
+
 <p>
 <%= link_to 'New SIR', new_sir_path %>
 </p>
