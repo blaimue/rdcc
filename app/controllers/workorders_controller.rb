@@ -1,9 +1,16 @@
 class WorkordersController < ApplicationController
   layout 'rdcc'
   
+  parameterized_before_filter :check_access, [[WORKORDER, STAFF]], :except => [:index, :new, :create, :confirmed]
+  parameterized_before_filter :check_access, [[WORKORDER, MANAGER]], :only => [:edit, :update, :approve, :intake]
+  
   # GET /workorders
   # GET /workorders.xml
   def index
+    unless has_access? WORKORDER, STAFF
+      redirect_to :action => :new
+      return
+    end
     @workorders = Workorder.all
 
     respond_to do |format|
@@ -27,6 +34,11 @@ class WorkordersController < ApplicationController
   # GET /workorders/new.xml
   def new
     @workorder = Workorder.new
+    sir = Sir.find(params[:sir_id])
+    @sir_id = sir.id
+    if sir.program
+      @workorder.program = sir.program
+    end
 
     respond_to do |format|
       format.html # new.html.erb
@@ -38,22 +50,58 @@ class WorkordersController < ApplicationController
   def edit
     @workorder = Workorder.find(params[:id])
   end
+  def complete
+    @workorder = Workorder.find(params[:id])
+    if @workorder.complete?
+      redirect_to workorders_path
+    end
+    
+    if request.put?
+      if @workorder.update_attributes(params[:workorder])
+        flash[:notice] = "Workorder complete"
+        redirect_to workorders_path
+      else
+        flash[:error] = "There was a problem, please try again"
+        redirect_to complete_workorder_path(@workorder)
+      end
+    end
+  end
+  def estimate
+    @workorder = Workorder.find(params[:id])
+  end
 
+  def confirmed
+    @workorder = Workorder.find(params[:id])
+  end
+  
+  def intake
+    @workorder = Workorder.find(params[:id])
+  end
+  
+  def approve
+    @workorder = Workorder.find(params[:id])
+    if request.put?
+      if @workorder.update_attributes(params[:workorder])
+        flash[:notice] = "Workorder approved"
+        redirect_to workorders_path
+      else
+        flash[:error] = "There was a problem, please try again"
+        redirect_to process_workorder_path(@workorder)
+      end
+    end
+  end
+  
   # POST /workorders
   # POST /workorders.xml
   def create
     params[:workorder][:status] = Workorder.STATUS[:pending]
     @workorder = Workorder.new(params[:workorder])
 
-    respond_to do |format|
-      if @workorder.save
-        flash[:notice] = 'Workorder was successfully created.'
-        format.html { redirect_to(@workorder) }
-        format.xml  { render :xml => @workorder, :status => :created, :location => @workorder }
-      else
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @workorder.errors, :status => :unprocessable_entity }
-      end
+    if @workorder.save
+      flash[:notice] = 'Workorder was successfully created.'
+      redirect_to confirmed_workorder_path(@workorder)
+    else
+      render :action => "new"
     end
   end
 

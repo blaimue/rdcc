@@ -1,2 +1,6 @@
-<h1>Dashboard#workorder_manager</h1>
-<p>Find me in app/views/dashboard/workorder_manager.html.erb</p>
+
+<h1>Workorders awaiting approval</h1>
+<%= render :partial => 'workorders/workorder_list', :object => @pending_workorders, :locals => {:empty_list_message => "No workorders reported"} %>
+
+<h1>Workorders in progress</h1>
+<%= render :partial => 'workorders/workorder_list', :object => @in_progress_workorders, :locals => {:empty_list_message => "No workorders reported"} %>

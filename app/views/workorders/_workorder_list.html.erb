@@ -1,0 +1,79 @@
+<% empty_list_message ||= "No workorders in progress" %>
+<% show_status ||= false %>
+<% show_complete_fields ||= false %>
+
+<% if workorder_list.nil? or workorder_list.length == 0%>
+<p><em><%= empty_list_message %></em></p>
+<% else %>
+<table>
+  <tr>
+    <th>Risk</th>
+    <th>ID</th>
+    <% if has_access? WORKORDER, STAFF %>
+      <th>Priority</th>
+    <% end %>
+    
+    <% if show_status %>
+      <th>Status</th>
+    <% end %>
+    
+    <th>Program</th>
+    <th>Location</th>
+    <th>Description</th>
+    <th>Estimation</th>
+    
+    <% if show_complete_fields %>
+      <th>Cost</th>
+      <th>Completed on</th>
+    <% end %>
+    
+    <th>Note</th>
+  </tr>
+
+  <% workorder_list.each do |workorder| %>
+    <tr>
+      <td><% if workorder.risk %><span class="warning">!!!</span><% end %></td>
+      <td><%=h workorder.id %></td>
+      
+      <% if has_access? WORKORDER, STAFF %>
+        <td><%=h workorder.priority %></td>
+      <% end %>
+      
+      <% if show_status %>
+        <td><%=h workorder.display_status %></td>
+      <% end %>
+      
+      <td><%=h workorder.program.name %></td>
+      <td><%=h workorder.location %></td>
+      <td><%=h workorder.description %></td>
+      <td><%=h workorder.estimation %></td>
+      
+      <% if show_complete_fields %>
+        <td><%=h workorder.cost %></td>
+        <td><%=h workorder.completed_on %></td>
+      <% end %>
+      
+      <td><%=h workorder.note %></td>
+      
+      <% if has_access? WORKORDER, STAFF %>
+        <% if workorder.status == Workorder.STATUS[:pending] %>
+          <td><%= link_to 'Process', process_workorder_path(workorder) %></td>
+          <!-- <td><%= link_to 'Edit', edit_workorder_path(workorder) %></td> -->
+          <td><%= link_to 'Destroy', workorder, :confirm => 'Are you sure?', :method => :delete %></td>
+        <% else %>
+          <td>
+            <% if workorder.estimation.nil? and workorder.completed_on.nil? %>
+              <%= link_to 'Estimate', estimate_workorder_path(workorder) %>
+            <% end %>
+          </td>
+          <td>
+            <% if workorder.completed_on.nil? %>
+              <%= link_to 'Complete', complete_workorder_path(workorder) %>
+            <% end %>
+          </td>
+        <% end %>
+      <% end %>
+    </tr>
+  <% end %>
+  </table>
+<% end %>

@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100626211841) do
+ActiveRecord::Schema.define(:version => 20100629031103) do
 
   create_table "customers", :force => true do |t|
     t.string   "first_name",  :limit => 100, :default => ""
@@ -88,6 +88,11 @@ ActiveRecord::Schema.define(:version => 20100626211841) do
 
   create_table "programs", :force => true do |t|
     t.string "name"
+  end
+
+  create_table "roles_users", :id => false, :force => true do |t|
+    t.integer "role_id"
+    t.integer "user_id"
   end
 
   create_table "signatures", :force => true do |t|
@@ -169,7 +174,7 @@ ActiveRecord::Schema.define(:version => 20100626211841) do
     t.integer  "sir_id"
     t.integer  "priority"
     t.integer  "status"
-    t.integer  "program"
+    t.integer  "program_id"
     t.string   "location"
     t.text     "description"
     t.boolean  "risk"

@@ -1,0 +1,28 @@
+<% form_for @workorder, :url => complete_workorder_path do |f| %>
+
+<%= f.hidden_field :status, :value => Workorder.STATUS[:complete] %>
+<%= f.hidden_field :completed_on, :value => Date.today %>
+
+<p>
+  <b>Program:</b>
+  <%=h @workorder.program.name %>
+</p>
+
+<p>
+  <b>Location:</b>
+  <%=h @workorder.location %>
+</p>
+
+<p>
+  <b>Description:</b>
+  <%=h @workorder.description %>
+</p>
+
+<p>
+  <%= f.label :cost, "Cost:" %> <b>$</b><%= f.text_field :cost, :style => "width:30px;" %>
+</p>
+
+<p>
+<%= button 'workorder', 'Complete' %>
+</p>
+<% end %>

@@ -18,6 +18,10 @@
 <% end %>
 
 <p>
+  <%= link_to "Create a workorder for this SIR", new_workorder_path(:sir_id => @sir.id) %>
+</p>
+
+<p>
 	<b>ID:</b>
 	<%=h sprintf("%04d", @sir.id) %>
 </p>

@@ -5,6 +5,19 @@ module ApplicationHelper
      f.text_area field, :rows => nil, :cols => nil
   end
   
+  def has_access?(role, level)
+    user = User.find(session[:user_id])
+    case role
+      when HR:
+        return user.hr_role >= level
+      when PROGRAM:
+        return user.program_role >= level
+      when WORKORDER:
+        return user.workorder_role >= level
+    end
+    return false
+  end
+  
   def formatted_date_field(f, obj, field)
     f.text_field field, :value => obj[field]
   end
@@ -18,14 +31,19 @@ module ApplicationHelper
   end
 
   def paginate(page_number, page_count, total_count, path)
+    if total_count < PAGE_SIZE
+      return ""
+    end
+    
     prev_page = page_number-1
     next_page = page_number + 1
     
     prev_link = link_to_unless(prev_page < 0, h("<<"), send(path, :page_number => prev_page))
     status = "&nbsp;Showing #{page_number*PAGE_SIZE+1} - #{[page_number*PAGE_SIZE+page_count, total_count].min} of #{total_count}&nbsp;"
     next_link = link_to_unless (next_page*PAGE_SIZE>total_count, h(">>"), send(path, :page_number => next_page))
+    all = link_to("Show all", send(path, :page_number => 'all'))
     
-    return prev_link + status + next_link + "&nbsp;&nbsp;&nbsp;" + link_to("Show all", send(path, :page_number => 'all'))
+    return prev_link + status + next_link + "&nbsp;&nbsp;&nbsp;" + all
   end
 
   def write_sir(pdf, sir)

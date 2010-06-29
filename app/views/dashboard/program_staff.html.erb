@@ -2,3 +2,7 @@
 
 <h2>Drafts</h2>
 <%= render :partial => 'sirs/sir_list', :object => @draft_sirs, :locals => {:show_sir_warning => true} %>
+
+
+<h2>Workorders</h2>
+<%= render :partial => 'workorders/workorder_list', :object => @user_workorders, :locals => {:empty_list_message => "No workorders reported", :show_status => true} %>

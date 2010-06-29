@@ -66,7 +66,7 @@ class CreateTables < ActiveRecord::Migration
       t.integer :sir_id
       t.integer :priority
       t.integer :status
-      t.integer :program
+      t.integer :program_id
       t.string :location
       t.text :description
       t.boolean :risk

@@ -4,7 +4,7 @@
   <%= f.error_messages %>
 
   <p>
-    <%= f.label :sir_id %><br />
+    <%= f.label :sir_id, "SIR number" %><br />
     <%= f.text_field :sir_id %>
   </p>
   <p>
@@ -12,12 +12,7 @@
     <%= f.text_field :priority %>
   </p>
   <p>
-    <%= f.label :status %><br />
-    <%= f.text_field :status %>
-  </p>
-  <p>
-    <%= f.label :program %><br />
-    <%= f.text_field :program %>
+    <b>Status:</b> <%= @workorder.display_status %>
   </p>
   <p>
     <%= f.label :location %><br />
@@ -28,28 +23,21 @@
     <%= unconstrained_text_area f,  :description %>
   </p>
   <p>
-    <%= f.label :risk %><br />
-    <%= f.check_box :risk %>
+    <%= f.check_box :risk %> <%= f.label :risk, "High risk" %>
   </p>
   <p>
-    <%= f.label :user_id %><br />
-    <%= f.text_field :user_id %>
+    <b>Reporting User:</b> <%= @workorder.user.short_name %>
   </p>
   <p>
     <%= f.label :estimation %><br />
     <%= f.date_select :estimation %>
   </p>
   <p>
-    <%= f.label :cost %><br />
-    <%= f.text_field :cost %>
+    <%= f.label :cost, "Cost:" %> <b>$</b><%= f.text_field :cost, :style => "width:30px;" %>
   </p>
   <p>
     <%= f.label :completed_on %><br />
     <%= f.date_select :completed_on %>
-  </p>
-  <p>
-    <%= f.label :notify_on_complete %><br />
-    <%= f.check_box :notify_on_complete %>
   </p>
   <p>
     <%= f.label :note %><br />
@@ -60,4 +48,6 @@
   </p>
 <% end %>
 
-<%= link_to 'Show', @workorder %>
+<p>
+  <%= link_to 'Show', @workorder %>
+</p>

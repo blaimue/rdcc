@@ -13,6 +13,7 @@ ActionController::Routing::Routes.draw do |map|
   map.sir_notified '/sirs/:id/notified/:teammate_id', :controller => 'sirs', :action => 'notified'
   map.discontinue_message '/messages/:id/discontinue', :controller => 'messages', :action => 'discontinue'
   map.bugs 'feedback', :controller => 'feedbacks', :action => 'new'
+  map.process_workorder '/workorders/:id/intake', :controller => 'workorders', :action => 'intake'
   
   map.resources :customers
   map.resources :incidenttypes
@@ -20,7 +21,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :sirs
   map.resources :teammates
   map.resources :users
-  map.resources :workorders
+  map.resources :workorders, :member => {:approve => :put, :deny => :put, :complete => [:get, :put], :estimate => :get, :confirmed => :get}
   map.resources :feedbacks
 
   map.logout '/logout', :controller => 'sessions', :action => 'destroy'

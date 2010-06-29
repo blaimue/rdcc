@@ -1,6 +1,10 @@
 <p>
   <b>Sir:</b>
-  <%=h @workorder.sir_id %>
+  <% if @workorder.sir_id.nil? %>
+    <i>No associated SIR</i>
+  <% else %>
+    <%= sprintf("%04d", @workorder.sir_id) %>
+  <% end %>
 </p>
 
 <p>
@@ -10,12 +14,12 @@
 
 <p>
   <b>Status:</b>
-  <%=h @workorder.status %>
+  <%=h @workorder.display_status %>
 </p>
 
 <p>
   <b>Program:</b>
-  <%=h @workorder.program %>
+  <%=h @workorder.program.name %>
 </p>
 
 <p>
@@ -29,13 +33,13 @@
 </p>
 
 <p>
-  <b>Risk:</b>
-  <%=h @workorder.risk %>
+  <b>High Risk:</b>
+  <%=h @workorder.risk ? "yes" : "no" %>
 </p>
 
 <p>
   <b>User:</b>
-  <%=h @workorder.user_id %>
+  <%=h @workorder.user.short_name %>
 </p>
 
 <p>
@@ -44,18 +48,13 @@
 </p>
 
 <p>
-  <b>Cost:</b>
-  <%=h @workorder.cost %>
-</p>
-
-<p>
   <b>Completed on:</b>
   <%=h @workorder.completed_on %>
 </p>
 
 <p>
-  <b>Notify on complete:</b>
-  <%=h @workorder.notify_on_complete %>
+  <b>Cost:</b>
+  $<%=h @workorder.cost %>
 </p>
 
 <p>
@@ -63,5 +62,6 @@
   <%=h @workorder.note %>
 </p>
 
-
+<p>
 <%= link_to 'Edit', edit_workorder_path(@workorder) %>
+</p>

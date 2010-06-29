@@ -1,0 +1,51 @@
+<% form_for @workorder, :url => approve_workorder_path(@workorder) do |f| %>
+  <%= f.error_messages %>
+
+  <%= f.hidden_field :status, :value => Workorder.STATUS[:in_progress]%>
+  <p>
+    <b>Sir:</b>
+    <%= sprintf("%04d", @workorder.sir_id) %>
+  </p>
+
+  <p>
+    <b>Program:</b>
+    <%=h @workorder.program.name %>
+  </p>
+
+  <p>
+    <b>Location:</b>
+    <%=h @workorder.location %>
+  </p>
+
+  <p>
+    <b>Description:</b>
+    <%=h @workorder.description %>
+  </p>
+
+  <p>
+    <b>Risk:</b>
+    <%=h @workorder.risk ? "yes" : "no" %>
+  </p>
+
+  <p>
+    <b>User:</b>
+    <%=h @workorder.user.short_name %>
+  </p>
+
+  <p>
+    <%= f.label :priority %><br />
+    <%= f.text_field :priority %>
+  </p>
+
+  <p>
+    <%= f.label :note %><br />
+    <%= unconstrained_text_area f,  :note %>
+  </p>
+  <p>
+    <%= button 'workorder', 'Approve' %>
+  </p>
+<% end %>
+<% form_for @workorder, :url => approve_workorder_path(@workorder) do |f| %>
+  <%= f.hidden_field :status, :value => Workorder.STATUS[:denied] %>
+  <%= button 'workorder', 'Deny' %>
+<% end %>

@@ -1,0 +1,41 @@
+<% form_for(@workorder) do |f| %>
+
+<p>
+  <b>Priority:</b>
+  <%=h @workorder.priority %>
+</p>
+
+<p>
+  <b>Status:</b>
+  <%=h @workorder.display_status %>
+</p>
+
+<p>
+  <b>Program:</b>
+  <%=h @workorder.program.name %>
+</p>
+
+<p>
+  <b>Location:</b>
+  <%=h @workorder.location %>
+</p>
+
+<p>
+  <b>Description:</b>
+  <%=h @workorder.description %>
+</p>
+
+<p>
+  <b>Risk:</b>
+  <%=h @workorder.risk ? "yes" : "no" %>
+</p>
+
+<h2>When do you think this will be complete?</h2>
+<p>
+  <%= f.label :estimation %><br />
+  <%= f.date_select :estimation %>
+</p>
+<p>
+<%= button 'workorder', 'Save estimate' %>
+</p>
+<% end %>

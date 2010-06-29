@@ -16,7 +16,7 @@
 	<% sir_list.each do |sir| %>
 	  <tr>
 	    <td><%=h sprintf("%04d", sir.id) %></td>
-	    <td class="<%= show_sir_warning and !sir.incident_datetime.nil? and sir.incident_datetime < 2.days.ago ? "oldSirWarning" : "" %>">
+	    <td class="<%= show_sir_warning and !sir.incident_datetime.nil? and sir.incident_datetime < 2.days.ago ? "warning" : "" %>">
 			<%=h sir.incident_datetime %>
 		</td>
 	    <td><%=h sir.customers_to_string %></td>
