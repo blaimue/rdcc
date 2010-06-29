@@ -34,10 +34,12 @@ class WorkordersController < ApplicationController
   # GET /workorders/new.xml
   def new
     @workorder = Workorder.new
-    sir = Sir.find(params[:sir_id])
-    @sir_id = sir.id
-    if sir.program
-      @workorder.program = sir.program
+    unless params[:sir_id].nil?
+      sir = Sir.find(params[:sir_id])
+      @sir_id = sir.id
+      if sir.program
+        @workorder.program = sir.program
+      end
     end
 
     respond_to do |format|
