@@ -83,7 +83,7 @@ class User < ActiveRecord::Base
       PROGRAM => "program_role",
       WORKORDER => "workorder_role"
     }
-    User.find(:all, :conditions => ["? >= ?", role_names[role], level])
+    User.find(:all, :conditions => ["? >= ? and status != ?", role_names[role], level, User.STATUS[:inactive]])
   end
   
   def self.all
