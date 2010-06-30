@@ -72,7 +72,7 @@ class SirsController < ApplicationController
       else
         program_managers = User.find_by_role(PROGRAM, MANAGER)
         unless program_managers.nil?
-          for recipient in program_managers.users
+          for recipient in program_managers
             SirMailer.deliver_new(@signature.sir, recipient.email)
           end
         end
