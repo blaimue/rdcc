@@ -3,6 +3,13 @@
   <%=h @user.email %>
 </p>
 
+<% if session[:developer] %>
+<p>
+  <b>Reset link:</b>
+  http://streamline.ruthdykeman.org:3000/reset_password/<%=h @user.remember_token %>
+</p>
+<% end %>
+
 <p>
   <b>First name:</b>
   <%=h @user.first_name %>

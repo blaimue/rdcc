@@ -14,3 +14,5 @@ MANAGER = 2
 SUPER = 3
 
 PAGE_SIZE = 50
+
+DEVELOPER_EMAILS = ["blaimue@gmail.com"]
