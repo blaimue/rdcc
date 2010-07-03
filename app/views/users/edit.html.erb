@@ -19,6 +19,12 @@
     <%= f.label :job_title %><br />
     <%= f.text_field :job_title %>
   </p>
+	<p>
+		<%= f.label :program %><br />
+		<% for program in Program.all %>
+			<%= f.radio_button :program_id, program.id %> <%= f.label :program_id, program.name, :value => program.id %><br />
+		<% end %>
+	</p>
   <p>
     <%= f.label :status %><br />
     <%= f.radio_button :status, User.STATUS[:fulltime] %>
@@ -86,6 +92,19 @@
         <%= f.password_field :password_confirmation %>
       </p>
   <% end %>
+  
+  <% if user_has_access? @user, PROGRAM, MANAGER %>
+    <p>
+      <label>SIR email preferences:</label><br />
+      <%= f.radio_button :preferred_sir_emails, PREF_SIR_EMAILS[:none] %>
+          <%= f.label :preferred_sir_emails, "None", :value => PREF_SIR_EMAILS[:none] %><br />
+      <%= f.radio_button :preferred_sir_emails, PREF_SIR_EMAILS[:program] %>
+          <%= f.label :preferred_sir_emails, "Program", :value => PREF_SIR_EMAILS[:program] %><br />
+      <%= f.radio_button :preferred_sir_emails, PREF_SIR_EMAILS[:all] %>
+          <%= f.label :preferred_sir_emails, "All", :value => PREF_SIR_EMAILS[:all] %><br />
+    </p>
+  <% end %>
+  
   <p>
     <%= button 'user', 'Update' %>
   </p>

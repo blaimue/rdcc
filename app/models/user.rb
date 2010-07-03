@@ -1,5 +1,7 @@
 class User < ActiveRecord::Base
   
+  preference :sir_emails, :integer, :default => PREF_SIR_EMAILS[:program]
+  
   class << self; attr_reader :STATUS end
   @STATUS = {
     :fulltime => 0,

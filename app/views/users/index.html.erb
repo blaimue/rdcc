@@ -15,7 +15,7 @@
     <td><%=h user.full_name %></td>
     <td><%=h user.job_title %></td>
     <td><%=h user.role_names %></td>
-    <td><%=h user.status_name %></td>
+    <td><%=h user.program.nil? ? "" : user.program.name %> <%=h user.status_name %></td>
     <td><%=h user.emergency_contact_name %></td>
     <td><%=h user.emergency_contact_phone %></td>
     <td><%= link_to 'Show', user %></td>

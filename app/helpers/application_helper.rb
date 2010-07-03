@@ -5,8 +5,8 @@ module ApplicationHelper
      f.text_area field, :rows => nil, :cols => nil
   end
   
-  def has_access?(role, level)
-    user = User.find(session[:user_id])
+  def user_has_access?(user, role, level)
+    if user.nil? then return false end
     case role
       when HR:
         return user.hr_role >= level
@@ -16,6 +16,10 @@ module ApplicationHelper
         return user.workorder_role >= level
     end
     return false
+  end
+  
+  def has_access?(role, level)
+    user_has_access?(User.find(session[:user_id]), role, level)
   end
   
   def formatted_date_field(f, obj, field)

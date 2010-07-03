@@ -66,14 +66,18 @@ class SirsController < ApplicationController
     @signature = Signature.new(params[:signature])
     if @signature.save
       flash[:notice] = "Successfully signed SIR"
-      if @signature.program_role == MANAGER
+      if @signature.program_role == MANAGER and true == false
         redirect_to sir_notifications_path(@signature.sir)
         return
       else
         program_managers = User.find_by_role(PROGRAM, MANAGER)
         unless program_managers.nil?
           for recipient in program_managers
-            SirMailer.deliver_new(@signature.sir, recipient.email)
+            if recipient.preferred_sir_emails == PREF_SIR_EMAILS[:all] \
+              or recipient.preferred_sir_emails == PREF_SIR_EMAILS[:program] \
+              and recipient.program == @signature.sir.program
+                SirMailer.deliver_new(@signature.sir, recipient.email)
+            end
           end
         end
       end
