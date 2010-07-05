@@ -71,7 +71,12 @@ class SirsController < ApplicationController
         return
       else
         recipients = User.all
-        recipients.reject!{|user| !user.preferred_sir_emails.split(",").include? program.id.to_s}
+        if @signature.sir.program.nil?
+          recipients = User.find_by_role(PROGRAM, MANAGER)
+        else
+          recipients.reject!{|user| !user.preferred_sir_emails.split(",").include? @signature.sir.program.id.to_s}
+        end
+        logger.info("Sending SIR notifications to #{recipients.collect{|user| user.email}.to_sentence}")
         for recipient in recipients
           SirMailer.deliver_new(@signature.sir, recipient.email)
         end

@@ -93,16 +93,14 @@
       </p>
   <% end %>
   
-  <% if user_has_access? @user, PROGRAM, MANAGER %>
-    <p>
-      <label>SIR email preferences:</label><br />
-  		<% for program in Program.all %>
-  			<%= f.check_box :preferred_sir_emails, :id => "user_preferred_sir_emails_#{program.id}",
-  			  :value => program.id, :name => "user[preferred_sir_emails][#{program.id}]", :checked => (@user.preferred_sir_emails.split(",").include? program.id.to_s)  %>
-  			  <%= f.label :preferred_sir_emails, program.name, :value => program.id %><br />
-  		<% end %>
-    </p>
-  <% end %>
+  <p>
+    <label>SIR email preferences:</label><br />
+		<% for program in Program.all %>
+			<%= f.check_box :preferred_sir_emails, :id => "user_preferred_sir_emails_#{program.id}",
+			  :value => program.id, :name => "user[preferred_sir_emails][#{program.id}]", :checked => (@user.preferred_sir_emails.split(",").include? program.id.to_s)  %>
+			  <%= f.label :preferred_sir_emails, program.name, :value => program.id %><br />
+		<% end %>
+  </p>
   
   <p>
     <%= button 'user', 'Update' %>
