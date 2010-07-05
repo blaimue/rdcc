@@ -70,15 +70,10 @@ class SirsController < ApplicationController
         redirect_to sir_notifications_path(@signature.sir)
         return
       else
-        program_managers = User.find_by_role(PROGRAM, MANAGER)
-        unless program_managers.nil?
-          for recipient in program_managers
-            if recipient.preferred_sir_emails == PREF_SIR_EMAILS[:all] \
-              or recipient.preferred_sir_emails == PREF_SIR_EMAILS[:program] \
-              and recipient.program == @signature.sir.program
-                SirMailer.deliver_new(@signature.sir, recipient.email)
-            end
-          end
+        recipients = User.all
+        recipients.reject!{|user| !user.preferred_sir_emails.split(",").include? program.id.to_s}
+        for recipient in recipients
+          SirMailer.deliver_new(@signature.sir, recipient.email)
         end
       end
     else

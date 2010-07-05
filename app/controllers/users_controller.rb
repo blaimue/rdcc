@@ -3,17 +3,23 @@ class UsersController < ApplicationController
   
   skip_before_filter :authenticate, :only => [:create, :new, :forgot_password, :reset_password]
   
-  parameterized_before_filter :check_access, [[HR, STAFF]]
+  parameterized_before_filter :check_access, [[HR, STAFF]], :except => [:create, :new, :forgot_password, :reset_password]
   
   # GET /users
   # GET /users.xml
   def index
+    # testing
+    # user = User.find(session[:user_id])
+    # email = UserMailer.create_remember_token(user)
+    # email.set_content_type("text/html")
+    # UserMailer.deliver(email)
+    
     if (params[:show] == "all")
       @users = User.all
     else
       @users = User.find_active
     end
-
+    
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @users }
@@ -69,6 +75,7 @@ class UsersController < ApplicationController
   # PUT /users/1.xml
   def update
     @user = User.find(params[:id])
+    process_email_prefs(params)
 
     respond_to do |format|
       if @user.update_attributes(params[:user])
@@ -145,6 +152,22 @@ class UsersController < ApplicationController
       token += possible[(rand * 36).to_i].chr
     end
     return token
+  end
+
+  def process_email_prefs(params)
+    user_params = params[:user]
+    unless user_params.nil?
+      sir_email_prefs = user_params[:preferred_sir_emails]
+      unless sir_email_prefs.nil?
+        programs = []
+        for key in sir_email_prefs.keys
+          if sir_email_prefs[key] == "1"
+            programs.push(key)
+          end
+        end
+        params[:user][:preferred_sir_emails] = programs.join(',')
+      end
+    end
   end
   
 end

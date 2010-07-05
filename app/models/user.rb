@@ -1,6 +1,6 @@
 class User < ActiveRecord::Base
   
-  preference :sir_emails, :integer, :default => PREF_SIR_EMAILS[:program]
+  preference :sir_emails, :string, :default => ""
   
   class << self; attr_reader :STATUS end
   @STATUS = {

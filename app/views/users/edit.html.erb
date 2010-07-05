@@ -96,12 +96,11 @@
   <% if user_has_access? @user, PROGRAM, MANAGER %>
     <p>
       <label>SIR email preferences:</label><br />
-      <%= f.radio_button :preferred_sir_emails, PREF_SIR_EMAILS[:none] %>
-          <%= f.label :preferred_sir_emails, "None", :value => PREF_SIR_EMAILS[:none] %><br />
-      <%= f.radio_button :preferred_sir_emails, PREF_SIR_EMAILS[:program] %>
-          <%= f.label :preferred_sir_emails, "Program", :value => PREF_SIR_EMAILS[:program] %><br />
-      <%= f.radio_button :preferred_sir_emails, PREF_SIR_EMAILS[:all] %>
-          <%= f.label :preferred_sir_emails, "All", :value => PREF_SIR_EMAILS[:all] %><br />
+  		<% for program in Program.all %>
+  			<%= f.check_box :preferred_sir_emails, :id => "user_preferred_sir_emails_#{program.id}",
+  			  :value => program.id, :name => "user[preferred_sir_emails][#{program.id}]", :checked => (@user.preferred_sir_emails.split(",").include? program.id.to_s)  %>
+  			  <%= f.label :preferred_sir_emails, program.name, :value => program.id %><br />
+  		<% end %>
     </p>
   <% end %>
   

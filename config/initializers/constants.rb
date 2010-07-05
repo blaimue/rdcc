@@ -17,9 +17,5 @@ PAGE_SIZE = 50
 
 DEVELOPER_EMAILS = ["blaimue@gmail.com"]
 
-PREF_SIR_EMAILS = {
-  :none => 1,
-  :program => 2,
-  :all => 3
-}
+
 
