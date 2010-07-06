@@ -47,6 +47,7 @@ class User < ActiveRecord::Base
     User.status_names()[status]
   end
   
+
   def role_names
     roles = []
     if program_role == STAFF
@@ -73,10 +74,6 @@ class User < ActiveRecord::Base
 
   def self.find_active
     User.find(:all, :order => 'first_name asc, last_name asc', :conditions => ["status != ?", User.STATUS[:inactive]])
-  end
-  
-  def self.find_active_program
-    User.find(:all, :order => 'first_name asc, last_name asc', :conditions => ["status != ? and program_role >= ?", User.STATUS[:inactive], STAFF])
   end
   
   def self.find_by_role(role, level)

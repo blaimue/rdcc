@@ -33,7 +33,7 @@
 	    </div>
 	</td><td>
         <div style="overflow:hidden;overflow-y:auto;width:300px;max-height:200px;">
-		<% for user in User.find_active_program %>
+		<% for user in User.find_by_role(PROGRAM, STAFF) %>
 			<input type="checkbox"
 			    id="<%= "sir_user_ids_#{user.id}" %>"
 			    name="sir[user_ids][]"

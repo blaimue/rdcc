@@ -1,0 +1,30 @@
+
+fulltime:
+  status: <%= User.STATUS[:fulltime] %>
+  email: fulltime@rdcc.org
+
+inactive:
+  status: <%= User.STATUS[:inactive] %>  
+  email: inactive@rdcc.org
+
+parttime:
+  status: <%= User.STATUS[:parttime] %>
+  email: parttime@rdcc.org
+
+program_manager:
+  email: program_manager@rdcc.org
+  program_role: <%= MANAGER %>
+  first_name: Charlie
+  last_name: Bravo
+
+program_staff:
+  email: program_staff@rdcc.org
+  program_role: <%= STAFF %>
+  first_name: Charlie
+  last_name: Alpha
+
+workorder_manager:
+  email: workorder_manager@rdcc.org
+  program_role: <%= NONE %>
+  workorder_role: <%= MANAGER %>
+
