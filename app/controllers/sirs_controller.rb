@@ -127,15 +127,11 @@ class SirsController < ApplicationController
     parse_date_fields
     @sir = Sir.new(params[:sir])
 
-    respond_to do |format|
-      if @sir.save
-        flash[:notice] = 'Sir was successfully created.'
-        format.html { redirect_to(@sir) }
-        format.xml  { render :xml => @sir, :status => :created, :location => @sir }
-      else
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @sir.errors, :status => :unprocessable_entity }
-      end
+    if @sir.save
+      flash[:notice] = 'Sir was successfully created.'
+      redirect_to @sir
+    else
+      render :action => :edit
     end
   end
 

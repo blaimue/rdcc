@@ -20,6 +20,12 @@ class Sir < ActiveRecord::Base
   attr_accessor :teammate_name
   attr_accessor :user_name
   attr_accessor :user_name2
+
+  def validate
+    if !self.incident_datetime.nil? and self.incident_datetime > Date.today
+      errors.add_to_base("Incident time must be in the past")
+    end
+  end
   
   def title
     sir_title = ""
