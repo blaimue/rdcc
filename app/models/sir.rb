@@ -22,7 +22,7 @@ class Sir < ActiveRecord::Base
   attr_accessor :user_name2
 
   def validate
-    if !self.incident_datetime.nil? and self.incident_datetime > Date.today
+    if !self.incident_datetime.nil? and self.incident_datetime > Time.now
       errors.add_to_base("Incident time must be in the past")
     end
   end
