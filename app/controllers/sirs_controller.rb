@@ -66,7 +66,7 @@ class SirsController < ApplicationController
     @signature = Signature.new(params[:signature])
     if @signature.save
       flash[:notice] = "Successfully signed SIR"
-      if @signature.program_role == MANAGER and true == false
+      if @signature.program_role == MANAGER
         redirect_to sir_notifications_path(@signature.sir)
         return
       else
