@@ -11,7 +11,7 @@ class SessionsController < ApplicationController
 
   def create
     session[:user_id] = nil
-    user = User.authenticate(params[:email], params[:password])
+    user = User.authenticate(params[:email].downcase, params[:password])
     if user.nil? or user.kind_of? String
       flash[:error] = "Could not find user with that email and password"
       redirect_to :action => 'new'
