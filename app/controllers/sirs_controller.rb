@@ -124,7 +124,6 @@ class SirsController < ApplicationController
   # POST /sirs
   # POST /sirs.xml
   def create
-    parse_date_fields
     @sir = Sir.new(params[:sir])
 
     if @sir.save
@@ -138,7 +137,6 @@ class SirsController < ApplicationController
   # PUT /sirs/1
   # PUT /sirs/1.xml
   def update
-    parse_date_fields
     @sir = Sir.find(params[:id])
     
     if @sir.update_attributes(params[:sir])
@@ -171,14 +169,4 @@ class SirsController < ApplicationController
     end
   end
   
-private
-  
-  def parse_date_fields
-    unless params[:sir].nil?
-      params[:sir][:incident_datetime] = Chronic.parse(params[:sir][:incident_datetime]) unless params[:sir][:incident_datetime].nil?
-      params[:sir][:der_time_in] = Chronic.parse(params[:sir][:der_time_in]) unless params[:sir][:der_time_in].nil?
-      params[:sir][:der_time_door] = Chronic.parse(params[:sir][:der_time_door]) unless params[:sir][:der_time_door].nil?
-      params[:sir][:der_time_out] = Chronic.parse(params[:sir][:der_time_out]) unless params[:sir][:der_time_out].nil?
-    end
-  end
 end

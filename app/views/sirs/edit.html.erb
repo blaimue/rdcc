@@ -45,8 +45,8 @@
 	</td></tr></table>
 	</p>
 	<p>
-		<%= f.label :incident_datetime %><br />
-		<%= f.text_field :incident_datetime, :value => @sir.incident_datetime %> <em>(eg, 'yesterday 10am')</em>
+		<%= f.label :incident_datetime_string %><br />
+		<%= f.text_field :incident_datetime_string, :value => @sir.incident_datetime %> <em>(eg, 'yesterday 10am')</em>
 	</p>
 	<p>
 		<%= f.label :interventions %><br />
@@ -108,20 +108,20 @@
 	<%= unconstrained_text_area f,  :unsafe_behavior %>
 </p>
 <p>
-	<%= f.label :lsi_resolution %><br />
+	<%= f.label :lsi_resolution, "LSI Resolution" %><br />
 	<%= unconstrained_text_area f,  :lsi_resolution %>
 </p>
 <p>
-	<%= f.label :der_time_in %><br />
-	<%= formatted_date_field f, @sir, :der_time_in %>
+	<%= f.label :der_time_in_string, "DER Time In" %><br />
+	<%= formatted_date_field f, @sir, :der_time_in_string %>
 </p>
 <p>
-	<%= f.label :der_time_door %><br />
-	<%= formatted_date_field f, @sir, :der_time_door %>
+	<%= f.label :der_time_door_string, "DER Time Door" %><br />
+	<%= formatted_date_field f, @sir, :der_time_door_string %>
 </p>
 <p>
-	<%= f.label :der_time_out %><br />
-	<%= formatted_date_field f, @sir, :der_time_out %>
+	<%= f.label :der_time_out_string, "DER Time Out" %><br />
+	<%= formatted_date_field f, @sir, :der_time_out_string %>
 </p>
 <p>
 	<%= f.check_box :observation_report_completed %>

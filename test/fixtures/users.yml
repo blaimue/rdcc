@@ -12,6 +12,7 @@ parttime:
   email: parttime@rdcc.org
 
 program_manager:
+  id: 1
   email: program_manager@rdcc.org
   program_role: <%= MANAGER %>
   first_name: Charlie
