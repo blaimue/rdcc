@@ -69,4 +69,16 @@ class SirTest < ActiveSupport::TestCase
     assert_equal Time.local(Time.now.year, Time.now.month, Time.now.mday-1, 10, 0, 0), sir2.incident_datetime
   end
 
+  test "histogram_by_date" do
+    sirs = Sir.histogram_by_date
+    assert_not_nil sirs.keys
+    assert_equal 3, sirs.keys.length
+    assert_not_nil sirs["2010-02-03"]
+    assert_not_nil sirs["2009-02-03"]
+    assert_not_nil sirs["2010-02-04"]
+    assert_equal 2, sirs["2010-02-03"].length
+    assert_equal 1, sirs["2009-02-03"].length
+    assert_equal 2, sirs["2010-02-04"].length
+  end
+
 end

@@ -82,6 +82,20 @@ class Sir < ActiveRecord::Base
     @bad_der_time_out_parse = (self.der_time_out.nil? and !det.empty?)
   end
   
+  def self.histogram_by_date()
+    sirs = Sir.find(:all)
+    hash = {}
+    for sir in sirs
+      bucket = hash[sir.incident_datetime.to_s(:date)]
+      if bucket.nil?
+        bucket = []
+        hash[sir.incident_datetime.to_s(:date)] = bucket
+      end
+      bucket.push(sir)
+    end
+    return hash
+  end
+  
   def title
     sir_title = ""
     unless program.nil? or program.name.empty?

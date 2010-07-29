@@ -49,5 +49,6 @@ ActiveSupport::CoreExtensions::Date::Conversions::DATE_FORMATS.merge!(
 )
 ActiveSupport::CoreExtensions::Time::Conversions::DATE_FORMATS.merge!(
   :default => '%b %d %Y %l:%M%p',
-  :db => '%Y-%m-%d %H:%M'
+  :db => '%Y-%m-%d %H:%M',
+  :date => "%Y-%m-%d"
 )

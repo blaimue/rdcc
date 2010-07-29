@@ -1,0 +1,16 @@
+
+one:
+  incident_datetime: <%= Time.local(2010, 2, 3, 10, 0, 0) %>
+
+two:
+  incident_datetime: <%= Time.local(2010, 2, 3, 10, 0, 0) %>
+
+three:
+  incident_datetime: <%= Time.local(2009, 2, 3, 10, 0, 0) %>
+
+four:
+  incident_datetime: <%= Time.local(2010, 2, 4, 10, 0, 0) %>
+
+five:
+  incident_datetime: <%= Time.local(2010, 2, 4, 14, 0, 0) %>
+
