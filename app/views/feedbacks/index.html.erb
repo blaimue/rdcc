@@ -1,25 +1,4 @@
-<h1>Listing feedbacks</h1>
+<h1>Send feedback</h1>
 
-<table>
-  <tr>
-    <th>Comment</th>
-    <th>User</th>
-    <th>Status</th>
-  </tr>
+Please direct all feedback to <a href="mailto:blaimue@gmail.com">Chris Doyle</a>.
 
-<% @feedbacks.each do |feedback| %>
-  <tr>
-    <td><%=h feedback.comment %></td>
-    <td><%=h "#{feedback.user.short_name} (#{feedback.user.email})" unless feedback.user.nil? %></td>
-    <td><%=h feedback.status %></td>
-    <td><%= link_to 'Show', feedback %></td>
-    <td><%= link_to 'Edit', edit_feedback_path(feedback) %></td>
-  </tr>
-<% end %>
-</table>
-
-<p>
-	Show:
-	<%= link_to 'new', feedbacks_path %> |
-	<%= link_to 'all', feedbacks_path(:show => "all") %>
-</p>

@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100703030837) do
+ActiveRecord::Schema.define(:version => 20100729023114) do
 
   create_table "customers", :force => true do |t|
     t.string   "first_name",  :limit => 100, :default => ""
@@ -29,14 +29,6 @@ ActiveRecord::Schema.define(:version => 20100703030837) do
   create_table "customers_teammates", :id => false, :force => true do |t|
     t.integer "customer_id"
     t.integer "teammate_id"
-  end
-
-  create_table "feedbacks", :force => true do |t|
-    t.text     "comment"
-    t.integer  "user_id"
-    t.integer  "status"
-    t.datetime "created_at"
-    t.datetime "updated_at"
   end
 
   create_table "followups", :force => true do |t|
@@ -98,16 +90,6 @@ ActiveRecord::Schema.define(:version => 20100703030837) do
   end
 
   add_index "preferences", ["owner_id", "owner_type", "name", "group_id", "group_type"], :name => "index_preferences_on_owner_and_name_and_preference", :unique => true
-
-  create_table "prefs", :force => true do |t|
-    t.integer  "user_id"
-    t.integer  "key"
-    t.integer  "value_int"
-    t.string   "value_string"
-    t.datetime "value_time"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
 
   create_table "programs", :force => true do |t|
     t.string "name"
