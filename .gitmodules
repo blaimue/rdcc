@@ -1,0 +1,3 @@
+[submodule "public/javascripts/graphael"]
+	path = public/javascripts/graphael
+	url = git@github.com:blaimue/g.raphael.git

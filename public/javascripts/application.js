@@ -1,18 +1,79 @@
 // Place your application-specific JavaScript functions and classes here
 // This file is automatically included by javascript_include_tag :defaults
 
-function addPersonToSir(textfield, person_table) {
+SlidingDatePicker = function(node, histogram_sirs) {
+	var color = "#999";
+	var hilightColor = "#666";
+	var r = Raphael(node, 400, 60);
 	
-	// we need to wait until the autocomplete has populated the field before we submit the form
-	var autocomplete = document.getElementById("sir_" + person_table + "_name_auto_complete");
-	if (autocomplete.style.display != "none") {
-		return;
+	var values = [];
+	var dateKeys = [];
+	var now = new Date();
+	for (var i = 30; i >= 0; i--) {
+		var date = new Date(now.getTime() - i*1000*60*60*24);
+		
+		var month = date.getMonth()+1;
+		if (month < 10) {
+			month = "0" + month;
+		}
+		
+		var day = date.getDate();
+	  if (day < 10) {
+		  day = "0" + day;
+	  }
+		var dateKey = [date.getFullYear(), month, day].join("-");
+		dateKeys.push(dateKey);
 	}
 	
-	var nameField = document.getElementById("add_" + person_table + "_name");
-	nameField.value = textfield.value;
-	textfield.value = "";
-	nameField.parentNode.onsubmit();
+	// fill out missing hash keys
+	for (var i = 0; i < dateKeys.length; i++) {
+		var key = dateKeys[i];
+		if (!histogram_sirs[key]) {
+			histogram_sirs[key] = [];
+		}
+		if (histogram_sirs[key].length == 0) {
+			values.push(0.1);
+		} else {
+			values.push(histogram_sirs[key].length);
+		}
+	}
+	
+	c = r.g.barchart(0,0,14*values.length,60,[values],{'vgutter':0, 'colors':[color]});
+	
+	c.hover(function(){
+		
+		var dateKey = dateKeys[this.bar.id];
+		var sirs = histogram_sirs[dateKey];
+		
+		var html = "";
+		if (sirs.length == 0) {
+			html = ["<i>No SIRs on ", dateKey, "</i>"].join("");
+		}
+		else {
+			if (sirs.length == 1) {
+				html = ["1 SIR on ", dateKey, "<br />", ""];
+			}
+			else {
+				html = [sirs.length, " SIRs on ", dateKey, "<br />", ""];
+			}
+			for (var i = 0; i < sirs.length; i++) {
+				var sir = sirs[i].sir;	// they're wrapped in a generic object for some reason
+				html.push(sir.involved);
+				html.push(".  ");
+			}
+			html = html.join("");
+  	}
+		document.getElementById("slidingDatePickerData").innerHTML = html;
+		
+		this.bar.attr({fill: hilightColor});
+	}, function(){
+		document.getElementById("slidingDatePickerData").innerHTML = "";
+		this.bar.attr({fill: color});
+	});
+	c.click(function(){
+		var dateKey = dateKeys[this.bar.id];
+		window.location = "/sirs?date=" + dateKey;
+	});
 }
 
 

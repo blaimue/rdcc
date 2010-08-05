@@ -9,13 +9,20 @@ class SirsController < ApplicationController
   # GET /sirs.xml
   def index
     @has_edit_access = has_access? PROGRAM, MANAGER
-    @total_count = Sir.count
-    page_number = params[:page_number].to_i
-    @page_number = page_number
-    if page_number == 0 and params[:page_number] == 'all'
-      page_number = 'all'
+    if params[:date]
+      @sirs = Sir.find(:all, :conditions => ["incident_datetime > ? and incident_datetime < ?", Time.parse(params[:date]), Time.parse(params[:date])+60*60*24])
+      @total_count = -1
+    else
+      @total_count = Sir.count
+      page_number = params[:page_number].to_i
+      @page_number = page_number
+      if page_number == 0 and params[:page_number] == 'all'
+        page_number = 'all'
+      end
+      @sirs = Sir.page(page_number)
     end
-    @sirs = Sir.page(page_number)
+    
+    @sirs_histogram = Sir.histogram_by_date
 
     respond_to do |format|
       format.html # index.html.erb

@@ -23,6 +23,8 @@ class Sir < ActiveRecord::Base
   attr_accessor :user_name
   attr_accessor :user_name2
   
+  attr_accessor :involved
+  
   attr_accessor :bad_incident_datetime_parse, :bad_der_time_in_parse, :bad_der_time_door_parse, :bad_der_time_out_parse
 
   def validate
@@ -86,10 +88,21 @@ class Sir < ActiveRecord::Base
     sirs = Sir.find(:all)
     hash = {}
     for sir in sirs
-      bucket = hash[sir.incident_datetime.to_s(:date)]
+      next if sir.incident_datetime.nil?
+      sir.involved = ""
+      unless sir.incidenttypes.nil? or sir.incidenttypes.empty?
+        sir.involved += sir.incidenttypes.collect{|x| x.name}.to_sentence
+      end
+      unless sir.incidenttypes.nil? or sir.incidenttypes.empty? or sir.customers.nil? or sir.customers.empty?
+        sir.involved += " by "
+      end
+      unless sir.customers.nil? or sir.customers.empty?
+        sir.involved += sir.customers.collect{|x| x.short_name}.to_sentence
+      end
+      bucket = hash[sir.incident_datetime.strftime(ActiveSupport::CoreExtensions::Time::Conversions::DATE_FORMATS[:date])]
       if bucket.nil?
         bucket = []
-        hash[sir.incident_datetime.to_s(:date)] = bucket
+        hash[sir.incident_datetime.strftime(ActiveSupport::CoreExtensions::Time::Conversions::DATE_FORMATS[:date])] = bucket
       end
       bucket.push(sir)
     end
