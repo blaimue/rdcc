@@ -45,6 +45,9 @@ class Sir < ActiveRecord::Base
     errors.add_to_base("Sorry, couldn't parse DER Time In. Please try again, eg 'July 10, 3:40pm'") if @bad_der_time_in_parse
     errors.add_to_base("Sorry, couldn't parse DER Time Door. Please try again, eg 'July 10, 3:40pm'") if @bad_der_time_door_parse
     errors.add_to_base("Sorry, couldn't parse DER Time Out. Please try again, eg 'July 10, 3:40pm'") if @bad_der_time_out_parse
+    if @bad_incident_datetime_parse or @bad_der_time_in_parse or @bad_der_time_door_parse or @bad_der_time_out_parse
+      logger.debug("BAD PARSE: #{self.inspect}, #{errors.inspect}")
+    end
     # logger.info("Setting incident datetime to #{@incident_datetime.to_s(:db)}")
   end
   
