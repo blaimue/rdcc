@@ -48,7 +48,6 @@ class Sir < ActiveRecord::Base
     if @bad_incident_datetime_parse or @bad_der_time_in_parse or @bad_der_time_door_parse or @bad_der_time_out_parse
       logger.debug("BAD PARSE: #{self.inspect}, #{errors.inspect}")
     end
-    # logger.info("Setting incident datetime to #{@incident_datetime.to_s(:db)}")
   end
   
   def incident_datetime_string
