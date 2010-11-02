@@ -14,7 +14,7 @@ class ApplicationController < ActionController::Base
 
   # almost always want to auth... certain controllers/actions override this with skip_before_filter
   before_filter :authenticate
-  before_filter :find_messages
+#  before_filter :find_messages
 
   # Scrub sensitive parameters from your log
   filter_parameter_logging :password, :password_confirmation
