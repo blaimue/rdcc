@@ -1,5 +1,6 @@
 <h1>Listing SIRs</h1>
 
+<!--
 <table style="border:0;">
   <tr>
     <td style="border:0;"><div id="slidingDatePicker" style="width:400px;height:60px;position:relative;"></div></td>
@@ -8,11 +9,11 @@
 </table>
 
 <script>
-  var values = <%= @sirs_histogram.to_json(:methods => [:involved]) %>;
+  var values = <%#= @sirs_histogram.to_json(:methods => [:involved]) %>;
   // console.log(values);
   var sdp = new SlidingDatePicker(document.getElementById("slidingDatePicker"), values);
 </script>
-
+-->
 
 <%= render :partial => 'sir_list', :object => @sirs, :locals => {:empty_list_message => "No SIRs reported"} %>
 
