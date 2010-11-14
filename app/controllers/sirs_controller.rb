@@ -30,6 +30,11 @@ class SirsController < ApplicationController
     end
   end
 
+  def mail_test
+    @signature = Signature.first
+    SirMailer.deliver_new(@signature.sir, 'blaimue@gmail.com')
+  end
+
   # GET /sirs/1
   # GET /sirs/1.xml
   def show
