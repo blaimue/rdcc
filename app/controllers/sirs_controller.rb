@@ -78,25 +78,26 @@ class SirsController < ApplicationController
     @signature = Signature.new(params[:signature])
     if @signature.save
       flash[:notice] = "Successfully signed SIR"
-      if @signature.program_role == MANAGER
-        redirect_to sir_notifications_path(@signature.sir)
-        return
+
+      # always send an email...
+      recipients = User.all
+      if @signature.sir.program.nil?
+        recipients = User.find_by_role(PROGRAM, MANAGER)
       else
-        recipients = User.all
-        if @signature.sir.program.nil?
-          recipients = User.find_by_role(PROGRAM, MANAGER)
-        else
-          recipients.reject!{|user| !user.preferred_sir_emails.split(",").include? @signature.sir.program.id.to_s}
-        end
-        logger.info("Sending SIR notifications to #{recipients.collect{|user| user.email}.to_sentence}")
-        for recipient in recipients
-          SirMailer.deliver_new(@signature.sir, recipient.email)
-        end
+        recipients.reject!{|user| !user.preferred_sir_emails.split(",").include? @signature.sir.program.id.to_s}
+      end
+      logger.info("Sending SIR notifications to #{recipients.collect{|user| user.email}.to_sentence}")
+      for recipient in recipients
+        SirMailer.deliver_new(@signature.sir, recipient.email) unless recipient == @signature.user  # ...but not to ourself
       end
     else
       flash[:error] = @signature.errors.on_base.each{|attr, msg| "#{msg}<br />"}
     end
-    redirect_to @signature.sir
+    if @signature.program_role == MANAGER
+      redirect_to sir_notifications_path(@signature.sir)
+    else
+      redirect_to @signature.sir
+    end
   end
   
   def notifications
