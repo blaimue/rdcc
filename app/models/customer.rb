@@ -7,7 +7,8 @@ class Customer < ActiveRecord::Base
   belongs_to :program
   
   def short_name
-    "#{first_name} #{last_name[0].chr}" 
+
+    "#{first_name} #{last_name[0].chr unless last_name.nil?}" 
   end
   
   def full_name
