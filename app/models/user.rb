@@ -43,6 +43,7 @@ class User < ActiveRecord::Base
   end
 
   def status_name
+    return "" if status.nil?
     User.status_names()[status]
   end
   
