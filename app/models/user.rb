@@ -91,7 +91,7 @@ class User < ActiveRecord::Base
   end
 
   def short_name
-    "#{first_name} #{last_name[0].chr}"
+    "#{first_name} #{last_name[0].chr unless last_name.nil? or last_name[0].nil?}"
   end
   
   def full_name

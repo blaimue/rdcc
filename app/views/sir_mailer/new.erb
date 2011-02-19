@@ -3,8 +3,8 @@ New SIR #<%= @sir.id %> needs your attention.
 Program: <%= @sir.program.name unless @sir.program.nil? %>
 
 Date/time: <%=h @sir.incident_datetime %>
-Customers: <%= @sir.customers.collect{|x| x.full_name}.to_sentence %>
-Staff: <%= @sir.users.collect{|x| x.full_name}.to_sentence %>
+Customers: <%= @sir.customers.collect{|x| x.short_name}.to_sentence %>
+Staff: <%= @sir.users.collect{|x| x.short_name}.to_sentence %>
 
 Incidents: <%=h @sir.incidenttypes.collect{|x| x.name}.to_sentence %>
 Interventions: <%=h @sir.interventions.collect{|x| x.name}.to_sentence %>
