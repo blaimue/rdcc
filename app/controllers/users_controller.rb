@@ -108,7 +108,7 @@ class UsersController < ApplicationController
   
   def forgot_password
     if request.post?
-      user = User.find_by_email(params[:email])
+      user = User.find_by_email(params[:email].downcase)
       if user.nil?
         flash.now[:error] = "Sorry, no user with that email exists."
       else
