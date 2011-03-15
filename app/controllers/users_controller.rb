@@ -129,7 +129,7 @@ class UsersController < ApplicationController
   def reset_password
     @token = params[:token]
     if request.post?
-      user = User.find_by_email(params[:email])
+      user = User.find_by_email(params[:email].downcase)
       if user.remember_token == params[:token] and user.remember_token_expires_at > Time.now
         user.password = params[:password]
         user.password_confirmation = params[:password_confirmation]
