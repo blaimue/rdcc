@@ -61,10 +61,12 @@
 	<%=h @sir.interventions.collect{|x| x.name}.to_sentence %>
 </p>
 
+<% unless @sir.antecedent.nil? or @sir.antecedent.empty? %>
 <p>
 	<b>Antecedent:</b>
 	<%=h @sir.antecedent %>
 </p>
+<% end %>
 
 <p>
 	<b>Description:</b>

@@ -9,8 +9,6 @@ Staff: <%= @sir.users.collect{|x| x.short_name}.to_sentence %>
 Incidents: <%=h @sir.incidenttypes.collect{|x| x.name}.to_sentence %>
 Interventions: <%=h @sir.interventions.collect{|x| x.name}.to_sentence %>
 
-Antecedent: <%=h @sir.antecedent %>
-
 Description: <%=h @sir.description %>
 
 Resolution: <%=h @sir.lsi_resolution %>
