@@ -124,11 +124,11 @@ class Sir < ActiveRecord::Base
   
   def self.page(page_number)
     if page_number.class.to_s == "String"
-      return Sir.all(:order => 'incident_datetime desc')
+      return Sir.all(:order => 'id desc')
     end
     page_number = [page_number, 0].max
     page_number = [page_number, Sir.count/PAGE_SIZE].min
-    Sir.all(:offset => PAGE_SIZE*page_number, :limit => PAGE_SIZE, :order => 'incident_datetime desc')
+    Sir.all(:offset => PAGE_SIZE*page_number, :limit => PAGE_SIZE, :order => 'id desc')
   end
   
   def customers_to_string
