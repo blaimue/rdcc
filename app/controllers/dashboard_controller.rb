@@ -36,11 +36,11 @@ class DashboardController < ApplicationController
   end
 
   def program_staff
-    @draft_sirs = Sir.find(:all).delete_if{|x| x.signed}
+    @draft_sirs = Sir.find(:all, :order => "id desc").delete_if{|x| x.signed}
   end
 
   def program_manager
-    @signed_sirs = Sir.find(:all).delete_if{|x| x.locked || !x.signed}
+    @signed_sirs = Sir.find(:all, :order => "id desc").delete_if{|x| x.locked || !x.signed}
   end
 
   def workorder_staff
