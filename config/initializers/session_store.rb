@@ -5,7 +5,7 @@
 # Make sure the secret is at least 30 characters and all random, 
 # no regular words or you'll be exposed to dictionary attacks.
 ActionController::Base.session = {
-  :key         => '_rdcc_session',
+  :key         => '_rdcc_session_secure',
   :secret      => 'cf0c08516edce2d10a6c9f90bd604aa7488e0a2910aa627f3596d999def37012af30a6e8606466227690b087d8886e4a7f46b5ebfaf2a7d61980faadfd836881'
 }
 
