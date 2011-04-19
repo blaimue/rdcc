@@ -1,5 +1,6 @@
+rails --version '=2.3.5'
+rack --version '=1.0.0'
 prawn
 chronic
 hoptoad_notifier
 rack-ssl
-rails --version '= 2.3.5'
