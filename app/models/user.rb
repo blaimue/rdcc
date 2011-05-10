@@ -32,6 +32,10 @@ class User < ActiveRecord::Base
   attr_accessor :password_confirmation
   validates_confirmation_of :password
 
+  def email=(email_string)
+    write_attribute(:email, email_string.downcase)
+  end
+
   def password=(pwd)
     @password = pwd
     self.salt = self.object_id.to_s + rand.to_s
