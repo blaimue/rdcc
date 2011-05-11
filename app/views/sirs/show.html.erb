@@ -100,7 +100,7 @@
 
 <p>
 	<b>Observation report completed:</b>
-	<%=h @sir.observation_report_completed %>
+	<%=h @sir.observation_report_completed unless @sir.der_time_in.nil? or @sir.observation_report_completed %>
 </p>
 
 <p>
